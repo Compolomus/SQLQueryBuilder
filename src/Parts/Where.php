@@ -58,6 +58,6 @@ class Where
         foreach ($this->conditions as $key => $condition) {
             $array[] = '(' . Helper::concatWhere($condition->conditions(), $this->whereType[$key]) . ')';
         }
-        return Helper::concatWhere($array, 'and');
+        return 'WHERE ' . Helper::concatWhere($array, 'and');
     }
 }

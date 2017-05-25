@@ -16,7 +16,7 @@ class Order
         'desc' => []
     ];
 
-    public function __construct($field, $type = 'asc')
+    public function __construct($field = null, $type = 'asc')
     {
         if (!is_null($field)) {
             $this->add($field, $type);
