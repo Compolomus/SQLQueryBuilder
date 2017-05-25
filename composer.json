@@ -1,0 +1,25 @@
+{
+  "name": "SQLQueryBuilder",
+  "description": "Light simple query builder",
+  "license": "GPL-3.0",
+  "keywords": [
+    "sql",
+    "mysql",
+    "query builder"
+  ],
+  "type": "library",
+  "authors": [
+    {
+      "name": "Koenig",
+      "email": "compolom@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Koenig\\SQLQueryBuilder\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.0"
+  }
+}
