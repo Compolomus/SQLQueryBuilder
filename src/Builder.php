@@ -2,13 +2,20 @@
 
 namespace Koenig\SQLQueryBuilder;
 
-use Koenig\SQLQueryBuilder\Parts\Order;
-use Koenig\SQLQueryBuilder\Parts\Where;
-use Koenig\SQLQueryBuilder\System\Singleton;
+use Koenig\SQLQueryBuilder\Parts\{
+    Order,
+    Where,
+    Limit,
+    Group
+};
+use Koenig\SQLQueryBuilder\System\{
+    PDOInstanceInterface,
+    PDOInstance
+};
 
-class Builder
+class Builder implements PDOInstanceInterface
 {
-    use Singleton;
+    use PDOInstance;
 
     private $table;
 
@@ -20,6 +27,13 @@ class Builder
 
     private $group;
 
+    public function __construct($table = false) {
+        if ($table) {
+            $this->table($table);
+        }
+        $this->getPDO();
+    }
+
     public function table($table)
     {
         $this->table = $table;
@@ -29,12 +43,14 @@ class Builder
     public function where($type = 'and')
     {
         $this->where = new Where($type);
+        $this->where->base($this);
         return $this->where;
     }
 
     public function order($field = null, $type = 'asc')
     {
         $this->order = new Order($field, $type);
+        $this->order->base($this);
         return $this->order;
     }
 }

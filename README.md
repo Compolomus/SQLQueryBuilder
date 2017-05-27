@@ -6,13 +6,13 @@
 
 ```php
 
-namespace Koenig\SQLQueryBuilder;
+use Koenig\SQLQueryBuilder\Builder;
 
 use Koenig\SQLQueryBuilder\System\Placeholders;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$builder = Builder::getInstance();
+$builder = new Builder('users');
 
 echo '---WHERE---<br><br>';
 
@@ -26,7 +26,8 @@ echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r(Placeholders::$placeholders, 1) . '</pre>';
 
-echo '<pre>' . print_r($builder, 1) . '</pre>';
+#echo '<pre>' . print_r($builder, 1) . '</pre>';
+var_dump($builder->db());
 
 ```
 
