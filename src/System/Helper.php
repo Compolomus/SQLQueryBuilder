@@ -13,6 +13,11 @@ class Helper
         }
     }
 
+    public function concatFields(array $fields)
+    {
+        return implode(',', $fields);
+    }
+
     public static function concatOrder(array $order, $type = 'asc')
     {
         $result = '';

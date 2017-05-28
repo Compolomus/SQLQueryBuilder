@@ -14,7 +14,12 @@ require __DIR__ . '/vendor/autoload.php';
 
 $builder = new Builder('users');
 
-echo '---WHERE---<br><br>';
+echo '---SELECT---<br><br>';
+
+echo $builder->select(['user_id' => 'id', 'name', 'email'])
+    ->result();
+
+echo '<br><br>---WHERE---<br><br>';
 
 echo $builder->where()
         ->add('id', '=', 15)
@@ -27,9 +32,9 @@ echo $builder->where()
 echo '<br><br>---ORDER---<br><br>';
 
 echo $builder->order('gid', 'desc')
-            ->add('giu')
-            ->add('did')
-            ->add('ffd', 'desc')
+        ->add('giu')
+        ->add('did')
+        ->add('ffd', 'desc')
     ->result();
 
 echo '<br><br>---PLACEHOLDERS---<br><br>';

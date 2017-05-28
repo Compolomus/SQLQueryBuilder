@@ -3,14 +3,10 @@
 namespace Koenig\SQLQueryBuilder;
 
 use Koenig\SQLQueryBuilder\Parts\{
-    Order,
-    Where,
-    Limit,
-    Group
+    Order, Select, Where, Limit, Group
 };
 use Koenig\SQLQueryBuilder\System\{
-    PDOInstanceInterface,
-    PDOInstance
+    Helper, PDOInstanceInterface, PDOInstance
 };
 
 class Builder implements PDOInstanceInterface
@@ -18,6 +14,8 @@ class Builder implements PDOInstanceInterface
     use PDOInstance;
 
     private $table;
+
+    private $select;
 
     private $where;
 
@@ -27,17 +25,28 @@ class Builder implements PDOInstanceInterface
 
     private $group;
 
-    public function __construct($table = false) {
+    public function __construct($table = false)
+    {
         if ($table) {
-            $this->table($table);
+            $this->setTable($table);
         }
         $this->getPDO();
     }
 
-    public function table($table)
+    public function setTable($table)
     {
         $this->table = $table;
         return $this;
+    }
+
+    public function table() {
+        return $this->table ? Helper::escapeField($this->table) : null;
+    }
+
+    public function select(array $fields = []) {
+        $this->select = new Select($fields);
+        $this->select->base($this);
+        return $this->select;
     }
 
     public function where($type = 'and')
