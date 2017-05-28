@@ -37,12 +37,14 @@ echo $builder->order('gid', 'desc')
         ->add('ffd', 'desc')
     ->result();
 
+echo '<br><br>---LIMIT---<br><br>';
+
+echo $builder->limit(5, 10, 'page')
+    ->result();
+
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r(Placeholders::$placeholders, 1) . '</pre>';
-
-#echo '<pre>' . print_r($builder, 1) . '</pre>';
-#var_dump($builder->db());
 
 ```
 
