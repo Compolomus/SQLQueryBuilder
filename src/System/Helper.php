@@ -13,7 +13,7 @@ class Helper
         }
     }
 
-    public function concatFields(array $fields)
+    public static function concatFields(array $fields)
     {
         return implode(',', $fields);
     }
