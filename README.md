@@ -31,7 +31,15 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
         ->add('ffd', 'desc')
     ->limit(5, 10, 'page')
     ->get();
-
+/*
+SELECT `user_id` AS `id`,`name`,`email` 
+    FROM `users` 
+    WHERE (`id` = :w1 AND `fid` not in :w2) 
+        AND (`bid` > :w3 OR `fig` >= :w4) 
+    GROUP BY `mmm`,`t33` 
+    ORDER BY `giu`, `did` ASC, `gid`, `ffd` DESC 
+    LIMIT 45 OFFSET 5 
+*/
 echo '<br><br>---DELETE---<br><br>';
 
 #echo $builder->delete(5)
