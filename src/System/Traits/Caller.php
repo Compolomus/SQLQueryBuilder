@@ -1,6 +1,6 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System;
+namespace Koenig\SQLQueryBuilder\System\Traits;
 
 use Koenig\SQLQueryBuilder\Builder;
 
@@ -8,7 +8,7 @@ trait Caller
 {
     private $base = false;
 
-    public function base(Builder $base) {
+    public function base($base) {
         $this->base = $base;
     }
 

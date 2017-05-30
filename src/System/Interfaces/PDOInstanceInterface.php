@@ -1,6 +1,6 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System;
+namespace Koenig\SQLQueryBuilder\System\Interfaces;
 
 interface PDOInstanceInterface
 {

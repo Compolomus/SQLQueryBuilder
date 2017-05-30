@@ -4,9 +4,9 @@ namespace Koenig\SQLQueryBuilder\Parts;
 
 use Koenig\SQLQueryBuilder\System\{
     Conditions,
-    Helper,
-    Caller
+    Helper
 };
+use Koenig\SQLQueryBuilder\System\Traits\Caller;
 
 class Where
 {

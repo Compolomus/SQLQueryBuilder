@@ -2,11 +2,12 @@
 
 namespace Koenig\SQLQueryBuilder;
 
+use Koenig\SQLQueryBuilder\System\Helper;
+use Koenig\SQLQueryBuilder\System\Interfaces\PDOInstanceInterface;
+use Koenig\SQLQueryBuilder\System\Traits\PDOInstance;
 use Koenig\SQLQueryBuilder\Parts\{
-    Order, Select, Where, Limit, Group
-};
-use Koenig\SQLQueryBuilder\System\{
-    Helper, PDOInstanceInterface, PDOInstance
+    Select,
+    Delete
 };
 
 class Builder implements PDOInstanceInterface
@@ -17,13 +18,7 @@ class Builder implements PDOInstanceInterface
 
     private $select;
 
-    private $where;
-
-    private $limit;
-
-    private $order;
-
-    private $group;
+    private $delete;
 
     public function __construct($table = false)
     {
@@ -39,33 +34,22 @@ class Builder implements PDOInstanceInterface
         return $this;
     }
 
-    public function table() {
+    public function table()
+    {
         return $this->table ? Helper::escapeField($this->table) : null;
     }
 
-    public function select(array $fields = []) {
+    public function select(array $fields = [])
+    {
         $this->select = new Select($fields);
         $this->select->base($this);
         return $this->select;
     }
 
-    public function where($type = 'and')
+    public function delete($id = 0)
     {
-        $this->where = new Where($type);
-        $this->where->base($this);
-        return $this->where;
-    }
-
-    public function order($field = null, $type = 'asc')
-    {
-        $this->order = new Order($field, $type);
-        $this->order->base($this);
-        return $this->order;
-    }
-
-    public function limit($limit, $offset = 0, $type = 'limit') {
-        $this->limit = new Limit($limit, $offset, $type);
-        $this->limit->base($this);
-        return $this->limit;
+        $this->delete = new Delete($id);
+        $this->delete->base($this);
+        return $this->delete;
     }
 }

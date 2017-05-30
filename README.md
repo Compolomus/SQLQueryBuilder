@@ -17,30 +17,25 @@ $builder = new Builder('users');
 echo '---SELECT---<br><br>';
 
 echo $builder->select(['user_id' => 'id', 'name', 'email'])
-    ->result();
-
-echo '<br><br>---WHERE---<br><br>';
-
-echo $builder->where()
+    ->where()
         ->add('id', '=', 15)
         ->add('fid', 'not in', [1,2,3])
-            ->where('or')
-                ->add('bid', '>', '17')
-                ->add('fig', '>=', 177)
-    ->result();
-
-echo '<br><br>---ORDER---<br><br>';
-
-echo $builder->order('gid', 'desc')
+    ->where('or')
+        ->add('bid', '>', '17')
+        ->add('fig', '>=', 177)
+    ->group('mmm')
+        ->add('t33')
+    ->order('gid', 'desc')
         ->add('giu')
         ->add('did')
         ->add('ffd', 'desc')
-    ->result();
+    ->limit(5, 10, 'page')
+    ->get();
 
-echo '<br><br>---LIMIT---<br><br>';
+echo '<br><br>---DELETE---<br><br>';
 
-echo $builder->limit(5, 10, 'page')
-    ->result();
+#echo $builder->delete(5)
+#    ->result();
 
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 

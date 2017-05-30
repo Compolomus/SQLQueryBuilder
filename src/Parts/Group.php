@@ -2,10 +2,8 @@
 
 namespace Koenig\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\{
-    Caller,
-    Helper
-};
+use Koenig\SQLQueryBuilder\System\Helper;
+use Koenig\SQLQueryBuilder\System\Traits\Caller;
 
 class Group
 {

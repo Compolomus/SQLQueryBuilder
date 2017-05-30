@@ -2,7 +2,7 @@
 
 namespace Koenig\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\Caller;
+use Koenig\SQLQueryBuilder\System\Traits\Caller;
 
 class Limit
 {
@@ -46,6 +46,6 @@ class Limit
 
     public function result()
     {
-        return 'LIMIT ' . $this->offset . ' OFFSET ' . $this->limit;
+        return $this->limit ? 'LIMIT ' . $this->offset . ' OFFSET ' . $this->limit : '';
     }
 }
