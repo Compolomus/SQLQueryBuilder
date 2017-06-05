@@ -4,7 +4,7 @@ namespace Koenig\SQLQueryBuilder\System\Traits;
 
 trait Group
 {
-    private $group = false;
+    private $group;
 
     public function group($field = null)
     {

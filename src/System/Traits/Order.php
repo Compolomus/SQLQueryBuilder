@@ -4,7 +4,7 @@ namespace Koenig\SQLQueryBuilder\System\Traits;
 
 trait Order
 {
-    private $order = false;
+    private $order;
 
     public function order($field = null, $type = 'asc')
     {

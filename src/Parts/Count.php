@@ -4,13 +4,13 @@ namespace Koenig\SQLQueryBuilder\Parts;
 
 use Koenig\SQLQueryBuilder\System\Traits\{
     Caller,
-    Limit,
-    Where,
-    Order,
-    Group
+    Limit as TLimit,
+    Where as TWhere,
+    Order as TOrder,
+    Group as TGroup
 };
 
 class Count
 {
-    use Caller, Limit, Where, Order, Group;
+    use Caller, TLimit, TWhere, TOrder, TGroup;
 }

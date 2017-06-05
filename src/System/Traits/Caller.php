@@ -6,7 +6,7 @@ use Koenig\SQLQueryBuilder\Builder;
 
 trait Caller
 {
-    private $base = false;
+    private $base;
 
     public function base($base) {
         $this->base = $base;

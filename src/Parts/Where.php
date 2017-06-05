@@ -43,7 +43,6 @@ class Where
     public function __construct($type = 'and')
     {
         $this->where($type);
-        return $this;
     }
 
     public function add($field, $condition, $value)

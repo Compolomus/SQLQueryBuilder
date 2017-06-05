@@ -4,7 +4,7 @@ namespace Koenig\SQLQueryBuilder\System\Traits;
 
 trait Limit
 {
-    private $limit = false;
+    private $limit;
 
     public function limit($limit, $offset = 0, $type = 'limit')
     {

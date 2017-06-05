@@ -4,16 +4,16 @@ namespace Koenig\SQLQueryBuilder\Parts;
 
 use Koenig\SQLQueryBuilder\System\{
     Traits\Caller,
-    Traits\Limit,
-    Traits\Where,
-    Traits\Order,
-    Traits\Group,
+    Traits\Limit as TLimit,
+    Traits\Where as TWhere,
+    Traits\Order as TOrder,
+    Traits\Group as TGroup,
     Fields
 };
 
 class Select
 {
-    use Caller, Limit, Where, Order, Group;
+    use Caller, TLimit, TWhere, TOrder, TGroup;
 
     private $fields;
 

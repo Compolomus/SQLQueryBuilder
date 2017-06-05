@@ -4,13 +4,13 @@ namespace Koenig\SQLQueryBuilder\Parts;
 
 use Koenig\SQLQueryBuilder\System\Traits\{
     Caller,
-    Limit,
-    Where
+    Limit as TLimit,
+    Where as TWhere
 };
 
 class Delete
 {
-    use Caller, Limit, Where;
+    use Caller, TLimit, TWhere;
 
     public function __construct($id = 0)
     {

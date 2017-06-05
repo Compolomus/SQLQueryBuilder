@@ -4,7 +4,7 @@ namespace Koenig\SQLQueryBuilder\System\Traits;
 
 trait Where
 {
-    private $where = false;
+    private $where;
 
     public function where($type = 'and')
     {
