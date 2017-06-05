@@ -27,12 +27,12 @@ class Limit
             default:
             case 'limit':
                 if (!$this->offset) {
-                    list($this->limit, $this->offset) = [$this->offset, $this->limit];
+                    $this->list();
                 }
                 break;
 
             case 'offset':
-                list($this->limit, $this->offset) = [$this->offset, $this->limit];
+                $this->list();
                 break;
 
             case 'page':
@@ -42,6 +42,11 @@ class Limit
                 $this->offset = ($this->offset - 1) * $this->limit;
                 break;
         }
+    }
+
+    private function list()
+    {
+        return list($this->limit, $this->offset) = [$this->offset, $this->limit];
     }
 
     public function result()

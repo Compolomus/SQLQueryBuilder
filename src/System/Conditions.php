@@ -22,6 +22,10 @@ class Conditions
 
     private $conditions = [];
 
+    public function __construct()
+    {
+    }
+
     public function conditions()
     {
         return $this->conditions;
@@ -37,7 +41,7 @@ class Conditions
             default:
                 break;
             case 'in':
-            case 'not in';
+            case 'not in':
                 $value = '(' . implode(',', $value) . ')';
                 break;
             case 'between':
