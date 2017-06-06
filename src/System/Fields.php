@@ -10,9 +10,8 @@ class Fields
 
     public function __construct(array $fields)
     {
-        $return = '*';
+        $return = [];
         if (count($fields)) {
-            $return = [];
             foreach ($fields as $alias => $field) {
                 if (is_int($alias)) {
                     $return[] = Helper::escapeField($field);
@@ -20,14 +19,22 @@ class Fields
                     $return[] = Helper::escapeField($alias) . ' AS ' . Helper::escapeField($field);
                 }
             }
+        } else {
+            $return[] = '*';
         }
         $this->fields = $return;
     }
 
+    public function count($field = '*', $alias = null)
+    {
+        if ($field != '*') {
+            $field = Helper::escapeField($field);
+        }
+        $this->fields[] = 'COUNT(' . $field . ')' . (!is_null($alias) ? ' AS ' . Helper::escapeField($alias) : '');
+    }
+
     public function result()
     {
-        if ($this->fields != '*') {
-            return Helper::concatFields($this->fields);
-        }
+        return Helper::concatFields($this->fields);
     }
 }

@@ -34,21 +34,75 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
     ->limit(5, 10, 'page')
     ->get();
 
-echo '<br><br>---DELETE---<br><br>';
+/*
+    SELECT `user_id` AS `id`,`name`,`email`
+        FROM `users`
+        WHERE (`id` = :w1 AND `fid` not in :w2)
+            AND (`bid` > :w3 OR `fig` >= :w4)
+        GROUP BY `mmm`,`t33`
+        ORDER BY `giu`, `did` ASC,
+                 `gid`, `ffd` DESC
+        LIMIT 45 OFFSET 5
+*/
+
+echo '<br><br>---SELECT COUNT#1---<br><br>';
+echo $builder->select()
+    ->count()
+    ->get();
+
+/*
+    SELECT *,COUNT(*)
+        FROM `users`
+*/
+
+echo '<br><br>---SELECT COUNT#2---<br><br>';
+echo $builder->select()
+    ->count('*', 'count')
+    ->get();
+
+/*
+    SELECT *,COUNT(*) AS `count`
+        FROM `users`
+*/
+
+
+echo '<br><br>---DELETE BY ID---<br><br>';
 
 echo $builder->delete(5)
     ->get();
 
-echo '<br><br>---DELETE---<br><br>';
+/*
+    DELETE FROM `users`
+        WHERE (`id` = :w5)
+*/
+
+echo '<br><br>---DELETE WITH WHERE---<br><br>';
 
 echo $builder->delete()
     ->where()
         ->add('frrf', 'between', [12, 15])
     ->get();
 
+/*
+    DELETE FROM `users`
+        WHERE (`frrf` between :w6)
+*/
+
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r(Placeholders::$placeholders, 1) . '</pre>';
+
+/*
+Array
+(
+    [w1] => 15
+    [w2] => (1,2,3)
+    [w3] => 17
+    [w4] => 177
+    [w5] => 5
+    [w6] => 12 AND 15
+)
+*/
 
 ```
 
