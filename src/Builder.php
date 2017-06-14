@@ -6,8 +6,7 @@ use Koenig\SQLQueryBuilder\System\Helper;
 use Koenig\SQLQueryBuilder\System\Interfaces\PDOInstanceInterface;
 use Koenig\SQLQueryBuilder\System\Traits\PDOInstance;
 use Koenig\SQLQueryBuilder\Parts\{
-    Select,
-    Delete
+    Insert, Select, Delete
 };
 
 class Builder implements PDOInstanceInterface
@@ -19,6 +18,8 @@ class Builder implements PDOInstanceInterface
     private $select;
 
     private $delete;
+
+    private $insert;
 
     public function __construct($table = false)
     {
@@ -51,5 +52,12 @@ class Builder implements PDOInstanceInterface
         $this->delete = new Delete($id);
         $this->delete->base($this);
         return $this->delete;
+    }
+
+    public function insert($args = [])
+    {
+        $this->insert = new Insert($args);
+        $this->insert->base($this);
+        return $this->insert;
     }
 }

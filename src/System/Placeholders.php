@@ -13,7 +13,7 @@ class Placeholders
     }
     
     public static function add($key, $value) {
-        self::$placeholders[$key] = $value;
+        self::$placeholders[$key . self::$counter] = $value;
         self::$counter++;
     }
 }

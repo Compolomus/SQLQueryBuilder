@@ -49,6 +49,6 @@ class Conditions
                 $value = implode(' AND ', $value);
                 break;
         }
-        Placeholders::add('w' . Placeholders::$counter, $value);
+        Placeholders::add('w', $value);
     }
 }

@@ -88,6 +88,37 @@ echo $builder->delete()
         WHERE (`frrf` between :w6)
 */
 
+echo '<br><br>---INSERT FIELDS AND VALUES---<br><br>';
+
+echo $builder->insert()
+    ->fields(['name', 'email', 'age'])
+    ->values(['Vasya', 'vasya@gmail.com', 22])
+    ->values(['Petya', 'petya@gmail.com', 24])
+    ->get();
+
+/*
+    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i7,:i8,:i9),(:i10,:i11,:i12)
+*/
+
+echo '<br><br>---INSERT ARRAY(FIELDS => VALUES)---<br><br>';
+
+echo $builder->insert(['name' => 'Oleg', 'email' => 'oleg@gmail.com', 'age' => 33])
+    ->get();
+
+/*
+    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i13,:i14,:i15)
+*/
+
+echo '<br><br>---INSERT PREPARE WITH FIELDS---<br><br>';
+
+echo $builder->insert()
+    ->fields(['name', 'email', 'age'])
+    ->get();
+
+/*
+    INSERT INTO `users` (`name`,`email`,`age`) VALUES (?,?,?)
+*/
+
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r(Placeholders::$placeholders, 1) . '</pre>';
@@ -101,6 +132,15 @@ Array
     [w4] => 177
     [w5] => 5
     [w6] => 12 AND 15
+    [i7] => Vasya
+    [i8] => vasya@gmail.com
+    [i9] => 22
+    [i10] => Petya
+    [i11] => petya@gmail.com
+    [i12] => 24
+    [i13] => Oleg
+    [i14] => oleg@gmail.com
+    [i15] => 33
 )
 */
 
