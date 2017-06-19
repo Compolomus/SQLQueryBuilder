@@ -1,8 +1,8 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System;
+namespace Compolomus\SQLQueryBuilder\System;
 
-use Koenig\SQLQueryBuilder\System\Helper;
+use Compolomus\SQLQueryBuilder\System\Helper;
 
 class Fields
 {

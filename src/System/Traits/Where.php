@@ -1,6 +1,8 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System\Traits;
+namespace Compolomus\SQLQueryBuilder\System\Traits;
+
+use Compolomus\SQLQueryBuilder\Parts\Where as Pwhere;
 
 trait Where
 {
@@ -8,7 +10,7 @@ trait Where
 
     public function where($type = 'and')
     {
-        $this->where = new \Koenig\SQLQueryBuilder\Parts\Where($type);
+        $this->where = new Pwhere($type);
         $this->where->base($this);
         return $this->where;
     }

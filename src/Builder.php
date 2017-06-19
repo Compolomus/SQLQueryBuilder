@@ -1,11 +1,11 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder;
+namespace Compolomus\SQLQueryBuilder;
 
-use Koenig\SQLQueryBuilder\System\Helper;
-use Koenig\SQLQueryBuilder\System\Interfaces\PDOInstanceInterface;
-use Koenig\SQLQueryBuilder\System\Traits\PDOInstance;
-use Koenig\SQLQueryBuilder\Parts\{
+use Compolomus\SQLQueryBuilder\System\Helper;
+use Compolomus\SQLQueryBuilder\System\Interfaces\PDOInstanceInterface;
+use Compolomus\SQLQueryBuilder\System\Traits\PDOInstance;
+use Compolomus\SQLQueryBuilder\Parts\{
     Insert, Select, Delete
 };
 

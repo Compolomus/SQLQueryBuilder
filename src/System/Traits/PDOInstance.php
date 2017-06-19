@@ -1,6 +1,6 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System\Traits;
+namespace Compolomus\SQLQueryBuilder\System\Traits;
 
 trait PDOInstance
 {

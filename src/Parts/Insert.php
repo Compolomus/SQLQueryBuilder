@@ -1,15 +1,13 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\Parts;
+namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\Helper;
-use Koenig\SQLQueryBuilder\System\Traits\Caller;
-use Koenig\SQLQueryBuilder\System\Placeholders;
+use Compolomus\SQLQueryBuilder\System\Helper;
+use Compolomus\SQLQueryBuilder\System\Caller;
+use Compolomus\SQLQueryBuilder\System\Placeholders;
 
-class Insert
+class Insert extends Caller
 {
-    use Caller;
-
     private $fields = [];
 
     private $values = [];

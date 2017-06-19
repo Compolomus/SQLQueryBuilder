@@ -1,6 +1,8 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System\Traits;
+namespace Compolomus\SQLQueryBuilder\System\Traits;
+
+use Compolomus\SQLQueryBuilder\Parts\Limit as Plimit;
 
 trait Limit
 {
@@ -8,7 +10,7 @@ trait Limit
 
     public function limit($limit, $offset = 0, $type = 'limit')
     {
-        $this->limit = new \Koenig\SQLQueryBuilder\Parts\Limit($limit, $offset, $type);
+        $this->limit = new Plimit($limit, $offset, $type);
         $this->limit->base($this);
         return $this->limit;
     }

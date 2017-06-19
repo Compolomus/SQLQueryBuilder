@@ -1,10 +1,10 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System\Traits;
+namespace Compolomus\SQLQueryBuilder\System;
 
-use Koenig\SQLQueryBuilder\Builder;
+use Compolomus\SQLQueryBuilder\Builder;
 
-trait Caller
+class Caller
 {
     private $base;
 

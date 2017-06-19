@@ -1,9 +1,9 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\Parts;
+namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\{
-    Traits\Caller,
+use Compolomus\SQLQueryBuilder\System\{
+    Caller,
     Traits\Limit as TLimit,
     Traits\Where as TWhere,
     Traits\Order as TOrder,
@@ -11,9 +11,9 @@ use Koenig\SQLQueryBuilder\System\{
     Fields
 };
 
-class Select
+class Select extends Caller
 {
-    use Caller, TLimit, TWhere, TOrder, TGroup;
+    use TLimit, TWhere, TOrder, TGroup;
 
     private $fields;
 

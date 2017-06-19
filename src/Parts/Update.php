@@ -1,10 +1,10 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\Parts;
+namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\Caller;
+use Compolomus\SQLQueryBuilder\System\Caller;
 
-class Update
+class Update extends Caller
 {
-    use Caller;
+
 }

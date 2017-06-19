@@ -1,16 +1,16 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\Parts;
+namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\Traits\{
-    Caller,
+use Compolomus\SQLQueryBuilder\System\Caller;
+use Compolomus\SQLQueryBuilder\System\Traits\{
     Limit as TLimit,
     Where as TWhere
 };
 
-class Delete
+class Delete extends Caller
 {
-    use Caller, TLimit, TWhere;
+    use TLimit, TWhere;
 
     public function __construct($id = 0)
     {

@@ -1,13 +1,11 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\Parts;
+namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\Traits\Caller;
+use Compolomus\SQLQueryBuilder\System\Caller;
 
-class Limit
+class Limit extends Caller
 {
-    use Caller;
-
     private $limit;
 
     private $offset;

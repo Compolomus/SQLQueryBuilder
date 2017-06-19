@@ -8,9 +8,9 @@
 
 ```php
 
-use Koenig\SQLQueryBuilder\Builder;
+use Compolomus\SQLQueryBuilder\Builder;
 
-use Koenig\SQLQueryBuilder\System\Placeholders;
+use Compolomus\SQLQueryBuilder\System\Placeholders;
 
 require __DIR__ . '/vendor/autoload.php';
 

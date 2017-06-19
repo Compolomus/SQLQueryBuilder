@@ -1,6 +1,6 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System;
+namespace Compolomus\SQLQueryBuilder\System;
 
 class Helper
 {

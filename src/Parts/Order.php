@@ -1,14 +1,12 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\Parts;
+namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\Helper;
-use Koenig\SQLQueryBuilder\System\Traits\Caller;
+use Compolomus\SQLQueryBuilder\System\Helper;
+use Compolomus\SQLQueryBuilder\System\Caller;
 
-class Order
+class Order extends Caller
 {
-    use Caller;
-
     private $orders = [
         'asc' => [],
         'desc' => []

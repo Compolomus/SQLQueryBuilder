@@ -1,6 +1,8 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\System\Traits;
+namespace Compolomus\SQLQueryBuilder\System\Traits;
+
+use Compolomus\SQLQueryBuilder\Parts\Group as Pgroup;
 
 trait Group
 {
@@ -8,7 +10,7 @@ trait Group
 
     public function group($field = null)
     {
-        $this->group = new \Koenig\SQLQueryBuilder\Parts\Group($field);
+        $this->group = new Pgroup($field);
         $this->group->base($this);
         return $this->group;
     }

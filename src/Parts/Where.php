@@ -1,17 +1,15 @@
 <?php
 
-namespace Koenig\SQLQueryBuilder\Parts;
+namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Koenig\SQLQueryBuilder\System\{
+use Compolomus\SQLQueryBuilder\System\{
     Conditions,
     Helper
 };
-use Koenig\SQLQueryBuilder\System\Traits\Caller;
+use Compolomus\SQLQueryBuilder\System\Caller;
 
-class Where
+class Where extends Caller
 {
-    use Caller;
-
     private $whereType;
 
     private $whereTypes = [
