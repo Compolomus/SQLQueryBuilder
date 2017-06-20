@@ -24,7 +24,7 @@ class Limit extends Caller
         $method = 't' . ucfirst($type);
         $this->$method();
     }
-    
+
     public function tLimit()
     {
         if (!$this->offset) {

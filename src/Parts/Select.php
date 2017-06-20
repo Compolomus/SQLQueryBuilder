@@ -30,12 +30,19 @@ class Select extends Caller
         return $this->fields->result();
     }
 
+    public function getParts()
+    {
+        $result = '';
+        foreach (['where', 'group', 'order', 'limit'] as $value) {
+            $result .= (is_object($this->$value) ? ' ' . $this->$value->result() : '');
+        }
+        return $result;
+    }
+
     public function get()
     {
-        return 'SELECT ' . $this->getFields() . ' FROM ' . $this->table()
-            . (is_object($this->where) ? ' ' . $this->where->result() : '')
-            . (is_object($this->group) ? ' ' . $this->group->result() : '')
-            . (is_object($this->order) ? ' ' . $this->order->result() : '')
-            . (is_object($this->limit) ? ' ' . $this->limit->result() : '');
+        return 'SELECT ' . $this->getFields() . ' FROM '
+            . $this->table()
+            . $this->getParts();
     }
 }
