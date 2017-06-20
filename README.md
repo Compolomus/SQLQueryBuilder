@@ -20,24 +20,24 @@ echo '---SELECT---<br><br>';
 
 echo $builder->select(['user_id' => 'id', 'name', 'email'])
     ->where()
-        ->add('id', '=', 15)
-        ->add('fid', 'not in', [1,2,3])
+    ->add('id', '=', 15)
+    ->add('fid', 'not in', [1, 2, 3])
     ->where('or')
-        ->add('bid', '>', '17')
-        ->add('fig', '>=', 177)
+    ->add('bid', '>', '17')
+    ->add('fig', '>=', 177)
     ->group('mmm')
-        ->add('t33')
+    ->add('t33')
     ->order('gid', 'desc')
-        ->add('giu')
-        ->add('did')
-        ->add('ffd', 'desc')
+    ->add('giu')
+    ->add('did')
+    ->add('ffd', 'desc')
     ->limit(5, 10, 'page')
     ->get();
 
 /*
     SELECT `user_id` AS `id`,`name`,`email`
         FROM `users`
-        WHERE (`id` = :w1 AND `fid` not in :w2)
+        WHERE (`id` = :w1 AND `fid` NOT IN :w2)
             AND (`bid` > :w3 OR `fig` >= :w4)
         GROUP BY `mmm`,`t33`
         ORDER BY `giu`, `did` ASC,
@@ -80,12 +80,12 @@ echo '<br><br>---DELETE WITH WHERE---<br><br>';
 
 echo $builder->delete()
     ->where()
-        ->add('frrf', 'between', [12, 15])
+    ->add('frrf', 'between', [12, 15])
     ->get();
 
 /*
     DELETE FROM `users`
-        WHERE (`frrf` between :w6)
+        WHERE (`frrf` BETWEEN :w6)
 */
 
 echo '<br><br>---INSERT FIELDS AND VALUES---<br><br>';

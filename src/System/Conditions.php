@@ -36,7 +36,7 @@ class Conditions
         if (!in_array(strtolower($condition), $this->conditionTypes)) {
             throw new InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
         }
-        $this->conditions[] = Helper::escapeField($field) . ' ' . $condition . ' :' . 'w' . Placeholders::$counter;
+        $this->conditions[] = Helper::escapeField($field) . ' ' . strtoupper($condition) . ' :' . 'w' . Placeholders::$counter;
         switch ($condition) {
             default:
                 break;
