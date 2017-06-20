@@ -46,22 +46,29 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
 */
 
 echo '<br><br>---SELECT COUNT#1---<br><br>';
-echo $builder->select()
-    ->count()
+echo $builder->count('*')
+    ->where()
+    ->add('cid', '=', 1544)
+    ->group('ffff')
+    ->order('ffgid', 'desc')
+    ->limit(10, 20)
     ->get();
 
 /*
-    SELECT *,COUNT(*)
+    SELECT COUNT(*)
         FROM `users`
+        WHERE (`cid` = :w5)
+        GROUP BY `ffff`
+        ORDER BY `ffgid` DESC
+        LIMIT 20 OFFSET 10
 */
 
 echo '<br><br>---SELECT COUNT#2---<br><br>';
-echo $builder->select()
-    ->count('*', 'count')
+echo $builder->count('*', 'count')
     ->get();
 
 /*
-    SELECT *,COUNT(*) AS `count`
+    SELECT COUNT(*) AS `count`
         FROM `users`
 */
 
@@ -73,7 +80,7 @@ echo $builder->delete(5)
 
 /*
     DELETE FROM `users`
-        WHERE (`id` = :w5)
+        WHERE (`id` = :w6)
 */
 
 echo '<br><br>---DELETE WITH WHERE---<br><br>';
@@ -85,7 +92,7 @@ echo $builder->delete()
 
 /*
     DELETE FROM `users`
-        WHERE (`frrf` BETWEEN :w6)
+        WHERE (`frrf` BETWEEN :w7)
 */
 
 echo '<br><br>---INSERT FIELDS AND VALUES---<br><br>';
@@ -97,7 +104,7 @@ echo $builder->insert()
     ->get();
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i7,:i8,:i9),(:i10,:i11,:i12)
+    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i8,:i9,:i10),(:i11,:i12,:i13)
 */
 
 echo '<br><br>---INSERT ARRAY(FIELDS => VALUES)---<br><br>';
@@ -106,7 +113,7 @@ echo $builder->insert(['name' => 'Oleg', 'email' => 'oleg@gmail.com', 'age' => 3
     ->get();
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i13,:i14,:i15)
+    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i14,:i15,:i16)
 */
 
 echo '<br><br>---INSERT PREPARE WITH FIELDS---<br><br>';
@@ -130,17 +137,18 @@ Array
     [w2] => (1,2,3)
     [w3] => 17
     [w4] => 177
-    [w5] => 5
-    [w6] => 12 AND 15
-    [i7] => Vasya
-    [i8] => vasya@gmail.com
-    [i9] => 22
-    [i10] => Petya
-    [i11] => petya@gmail.com
-    [i12] => 24
-    [i13] => Oleg
-    [i14] => oleg@gmail.com
-    [i15] => 33
+    [w5] => 1544
+    [w6] => 5
+    [w7] => 12 AND 15
+    [i8] => Vasya
+    [i9] => vasya@gmail.com
+    [i10] => 22
+    [i11] => Petya
+    [i12] => petya@gmail.com
+    [i13] => 24
+    [i14] => Oleg
+    [i15] => oleg@gmail.com
+    [i16] => 33
 )
 */
 
