@@ -21,25 +21,28 @@ class Limit extends Caller
         $this->offset = $offset;
         $this->type = $type;
 
-        switch ($type) {
-            default:
-            case 'limit':
-                if (!$this->offset) {
-                    $this->list();
-                }
-                break;
-
-            case 'offset':
-                $this->list();
-                break;
-
-            case 'page':
-                if ($this->offset <= 0) {
-                    throw new InvalidArgumentException('Отрицательный или нулевой аргумент |PAGE construct|');
-                }
-                $this->offset = ($this->offset - 1) * $this->limit;
-                break;
+        $method = 't' . ucfirst($type);
+        $this->$method();
+    }
+    
+    public function tLimit()
+    {
+        if (!$this->offset) {
+            $this->list();
         }
+    }
+
+    public function tOffset()
+    {
+        $this->list();
+    }
+
+    public function tPage()
+    {
+        if ($this->offset <= 0) {
+            throw new InvalidArgumentException('Отрицательный или нулевой аргумент |PAGE construct|');
+        }
+        $this->offset = ($this->offset - 1) * $this->limit;
     }
 
     private function list()
