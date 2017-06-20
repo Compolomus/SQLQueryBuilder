@@ -11,21 +11,22 @@ class Fields
     public function __construct(array $fields, $count = false)
     {
         if ($count) {
-            return $this->count(key($fields), end($fields));
-        }
-        $return = [];
-        if (count($fields)) {
-            foreach ($fields as $alias => $field) {
-                if (is_int($alias)) {
-                    $return[] = Helper::escapeField($field);
-                } else {
-                    $return[] = Helper::escapeField($alias) . ' AS ' . Helper::escapeField($field);
-                }
-            }
+            $this->count(key($fields), end($fields));
         } else {
-            $return[] = '*';
+            $return = [];
+            if (count($fields)) {
+                foreach ($fields as $alias => $field) {
+                    if (is_int($alias)) {
+                        $return[] = Helper::escapeField($field);
+                    } else {
+                        $return[] = Helper::escapeField($alias) . ' AS ' . Helper::escapeField($field);
+                    }
+                }
+            } else {
+                $return[] = '*';
+            }
+            $this->fields = $return;
         }
-        $this->fields = $return;
     }
 
     public function count($field = '*', $alias = null)
