@@ -37,18 +37,18 @@ class Conditions
             throw new InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
         }
         $this->conditions[] = Helper::escapeField($field) . ' ' . strtoupper($condition) . ' :' . 'w' . Placeholders::$counter;
-        switch ($condition) {
-            default:
-                break;
-            case 'in':
-            case 'not in':
-                $value = '(' . implode(',', $value) . ')';
-                break;
-            case 'between':
-            case 'not between':
-                $value = implode(' AND ', $value);
-                break;
-        }
+        $value = $this->type($condition, $value);
         Placeholders::add('w', $value);
+    }
+
+    public function type($condition, $value)
+    {
+        return in_array($condition, ['in', 'not in'])
+            ? '(' . implode(',', $value) . ')'
+            : (
+            in_array($condition, ['between', 'not between'])
+                ? implode(' AND ', $value)
+                : $value
+            );
     }
 }
