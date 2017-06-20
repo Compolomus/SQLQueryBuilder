@@ -11,6 +11,9 @@ use Compolomus\SQLQueryBuilder\System\{
     Fields
 };
 
+/**
+ * @method string table()
+ */
 class Select extends Caller
 {
     use TLimit, TWhere, TOrder, TGroup;

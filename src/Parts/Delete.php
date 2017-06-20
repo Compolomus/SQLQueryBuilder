@@ -8,6 +8,9 @@ use Compolomus\SQLQueryBuilder\System\Traits\{
     Where as TWhere
 };
 
+/**
+ * @method string table()
+ */
 class Delete extends Caller
 {
     use TLimit, TWhere;

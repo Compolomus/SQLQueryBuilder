@@ -6,6 +6,9 @@ use Compolomus\SQLQueryBuilder\System\Helper;
 use Compolomus\SQLQueryBuilder\System\Caller;
 use Compolomus\SQLQueryBuilder\System\Placeholders;
 
+/**
+ * @method string table()
+ */
 class Insert extends Caller
 {
     private $fields = [];
