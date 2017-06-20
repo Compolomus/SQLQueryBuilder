@@ -6,10 +6,13 @@ use Compolomus\SQLQueryBuilder\System\Helper;
 
 class Fields
 {
-    private $fields;
+    private $fields = [];
 
-    public function __construct(array $fields)
+    public function __construct(array $fields, $count = false)
     {
+        if ($count) {
+            return $this->count(key($fields), end($fields));
+        }
         $return = [];
         if (count($fields)) {
             foreach ($fields as $alias => $field) {

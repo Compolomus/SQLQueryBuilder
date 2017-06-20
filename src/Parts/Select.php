@@ -18,22 +18,21 @@ class Select extends Caller
 {
     use TLimit, TWhere, TOrder, TGroup;
 
-    private $fields;
+    protected $fields;
 
-    public function __construct(array $fields = [])
+    public function __construct(array $fields = [], $count = false)
     {
-        $this->fields = new Fields($fields);
+        $this->fields = new Fields($fields, $count);
     }
 
-    public function count($field = '*', $alias = null)
+    public function getFields()
     {
-        $this->fields->count($field, $alias);
-        return $this;
+        return $this->fields->result();
     }
 
     public function get()
     {
-        return 'SELECT ' . $this->fields->result() . ' FROM ' . $this->table()
+        return 'SELECT ' . $this->getFields() . ' FROM ' . $this->table()
             . (is_object($this->where) ? ' ' . $this->where->result() : '')
             . (is_object($this->group) ? ' ' . $this->group->result() : '')
             . (is_object($this->order) ? ' ' . $this->order->result() : '')

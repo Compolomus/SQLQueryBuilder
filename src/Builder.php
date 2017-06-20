@@ -6,7 +6,7 @@ use Compolomus\SQLQueryBuilder\System\Helper;
 use Compolomus\SQLQueryBuilder\System\Interfaces\PDOInstanceInterface;
 use Compolomus\SQLQueryBuilder\System\Traits\PDOInstance;
 use Compolomus\SQLQueryBuilder\Parts\{
-    Insert, Select, Delete
+    Insert, Select, Delete, Count
 };
 
 class Builder implements PDOInstanceInterface
@@ -20,6 +20,8 @@ class Builder implements PDOInstanceInterface
     private $delete;
 
     private $insert;
+
+    private $count;
 
     public function __construct($table = false)
     {
@@ -45,6 +47,13 @@ class Builder implements PDOInstanceInterface
         $this->select = new Select($fields);
         $this->select->base($this);
         return $this->select;
+    }
+
+    public function count($field = '*', $alias = null)
+    {
+        $this->count = new Count($field, $alias);
+        $this->count->base($this);
+        return $this->count;
     }
 
     public function delete($id = 0)
