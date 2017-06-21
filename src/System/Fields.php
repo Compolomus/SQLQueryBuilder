@@ -13,20 +13,25 @@ class Fields
         if ($count) {
             $this->count(key($fields), end($fields));
         } else {
-            $return = [];
-            if (count($fields)) {
-                foreach ($fields as $alias => $field) {
-                    if (is_int($alias)) {
-                        $return[] = Helper::escapeField($field);
-                    } else {
-                        $return[] = Helper::escapeField($alias) . ' AS ' . Helper::escapeField($field);
-                    }
-                }
-            } else {
-                $return[] = '*';
-            }
-            $this->fields = $return;
+            $this->setFields($fields);
         }
+    }
+
+    public function setFields($fields)
+    {
+        $return = [];
+        if (count($fields)) {
+            foreach ($fields as $alias => $field) {
+                if (is_int($alias)) {
+                    $return[] = Helper::escapeField($field);
+                } else {
+                    $return[] = Helper::escapeField($alias) . ' AS ' . Helper::escapeField($field);
+                }
+            }
+        } else {
+            $return[] = '*';
+        }
+        $this->fields = $return;
     }
 
     public function count($field = '*', $alias = null)

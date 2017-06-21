@@ -2,11 +2,15 @@
 
 namespace Compolomus\SQLQueryBuilder;
 
-use Compolomus\SQLQueryBuilder\System\Helper;
-use Compolomus\SQLQueryBuilder\System\Interfaces\PDOInstanceInterface;
-use Compolomus\SQLQueryBuilder\System\Traits\PDOInstance;
-use Compolomus\SQLQueryBuilder\Parts\{
-    Insert, Select, Update, Delete, Count
+use Compolomus\SQLQueryBuilder\{
+    System\Helper,
+    System\Interfaces\PDOInstanceInterface,
+    System\Traits\PDOInstance,
+    Parts\Insert,
+    Parts\Select,
+    Parts\Update,
+    Parts\Delete,
+    Parts\Count
 };
 
 class Builder implements PDOInstanceInterface

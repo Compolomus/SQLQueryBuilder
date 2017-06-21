@@ -46,7 +46,7 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
 */
 
 echo '<br><br>---SELECT COUNT#1---<br><br>';
-echo $builder->count('*')
+echo $builder->count()
     ->where()
     ->add('cid', '=', 1544)
     ->group('ffff')
@@ -126,7 +126,7 @@ echo $builder->insert()
     INSERT INTO `users` (`name`,`email`,`age`) VALUES (?,?,?)
 */
 
-echo '<br><br>---UPDATE---<br><br>';
+echo '<br><br>---UPDATE#1---<br><br>';
 
 echo $builder->update(['user' => 11, 'post' => 345, 'text' => 'Text'])
     ->where()

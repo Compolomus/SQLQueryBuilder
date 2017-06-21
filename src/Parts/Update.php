@@ -29,7 +29,7 @@ class Update extends Insert
             Placeholders::add('u', $value);
         }
         $this->result = implode(',',
-            array_map(function ($field, $value) {
+            array_map(function($field, $value) {
                 return $field . ' = ' . $value;
             }
                 , Helper::escapeField($this->fields), $result));
