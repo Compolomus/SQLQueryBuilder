@@ -40,4 +40,9 @@ class Helper
         }
         return $field;
     }
+
+    public static function map($field, $value)
+    {
+        return $field . ' = ' . $value;
+    }
 }

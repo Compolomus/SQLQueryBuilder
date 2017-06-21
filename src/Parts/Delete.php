@@ -2,18 +2,18 @@
 
 namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\Caller;
 use Compolomus\SQLQueryBuilder\System\Traits\{
     Limit as TLimit,
-    Where as TWhere
+    Where as TWhere,
+    Caller
 };
 
 /**
  * @method string table()
  */
-class Delete extends Caller
+class Delete
 {
-    use TLimit, TWhere;
+    use TLimit, TWhere, Caller;
 
     public function __construct($id = 0)
     {

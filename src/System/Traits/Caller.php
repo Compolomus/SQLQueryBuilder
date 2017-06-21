@@ -1,10 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System;
+namespace Compolomus\SQLQueryBuilder\System\Traits;
 
-use Compolomus\SQLQueryBuilder\Builder;
-
-class Caller
+trait Caller
 {
     private $base;
 

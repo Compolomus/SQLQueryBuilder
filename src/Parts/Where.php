@@ -4,12 +4,14 @@ namespace Compolomus\SQLQueryBuilder\Parts;
 
 use Compolomus\SQLQueryBuilder\System\{
     Conditions,
-    Helper
+    Helper,
+    Traits\Caller
 };
-use Compolomus\SQLQueryBuilder\System\Caller;
 
-class Where extends Caller
+class Where
 {
+    use Caller;
+
     private $whereType;
 
     private $whereTypes = [

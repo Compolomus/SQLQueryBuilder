@@ -3,20 +3,21 @@
 namespace Compolomus\SQLQueryBuilder\Parts;
 
 use Compolomus\SQLQueryBuilder\System\{
-    Caller,
+    Traits\GetParts,
     Traits\Limit as TLimit,
     Traits\Where as TWhere,
     Traits\Order as TOrder,
     Traits\Group as TGroup,
+    Traits\Caller,
     Fields
 };
 
 /**
  * @method string table()
  */
-class Select extends Caller
+class Select
 {
-    use TLimit, TWhere, TOrder, TGroup;
+    use TLimit, TWhere, TOrder, TGroup, Caller, GetParts;
 
     protected $fields;
 
@@ -28,15 +29,6 @@ class Select extends Caller
     public function getFields()
     {
         return $this->fields->result();
-    }
-
-    public function getParts()
-    {
-        $result = '';
-        foreach (['where', 'group', 'order', 'limit'] as $value) {
-            $result .= (is_object($this->$value) ? ' ' . $this->$value->result() : '');
-        }
-        return $result;
     }
 
     public function get()

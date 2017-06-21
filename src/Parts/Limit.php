@@ -2,10 +2,12 @@
 
 namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\Caller;
+use Compolomus\SQLQueryBuilder\System\Traits\Caller;
 
-class Limit extends Caller
+class Limit
 {
+    use Caller;
+
     private $limit;
 
     private $offset;

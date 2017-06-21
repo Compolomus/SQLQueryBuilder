@@ -3,10 +3,12 @@
 namespace Compolomus\SQLQueryBuilder\Parts;
 
 use Compolomus\SQLQueryBuilder\System\Helper;
-use Compolomus\SQLQueryBuilder\System\Caller;
+use Compolomus\SQLQueryBuilder\System\Traits\Caller;
 
-class Order extends Caller
+class Order
 {
+    use Caller;
+
     private $orders = [
         'asc' => [],
         'desc' => []

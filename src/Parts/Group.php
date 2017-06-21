@@ -3,10 +3,12 @@
 namespace Compolomus\SQLQueryBuilder\Parts;
 
 use Compolomus\SQLQueryBuilder\System\Helper;
-use Compolomus\SQLQueryBuilder\System\Caller;
+use Compolomus\SQLQueryBuilder\System\Traits\Caller;
 
-class Group extends Caller
+class Group
 {
+    use Caller;
+
     private $groups = [];
 
     public function __construct($field = null)

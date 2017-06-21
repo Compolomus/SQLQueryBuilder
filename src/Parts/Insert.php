@@ -3,17 +3,20 @@
 namespace Compolomus\SQLQueryBuilder\Parts;
 
 use Compolomus\SQLQueryBuilder\System\Helper;
-use Compolomus\SQLQueryBuilder\System\Caller;
+use Compolomus\SQLQueryBuilder\System\Traits\Caller;
+use Compolomus\SQLQueryBuilder\System\Traits\SValues;
 use Compolomus\SQLQueryBuilder\System\Placeholders;
 
 /**
  * @method string table()
  */
-class Insert extends Caller
+class Insert
 {
-    private $fields = [];
+    use Caller;
 
-    private $values = [];
+    protected $fields = [];
+
+    protected $values = [];
 
     public function __construct(array $args = [])
     {
@@ -37,7 +40,7 @@ class Insert extends Caller
         return $this;
     }
 
-    private function set($values)
+    protected function set($values)
     {
         $result = [];
         foreach ($values as $value) {

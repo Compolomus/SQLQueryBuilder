@@ -126,6 +126,41 @@ echo $builder->insert()
     INSERT INTO `users` (`name`,`email`,`age`) VALUES (?,?,?)
 */
 
+echo '<br><br>---UPDATE---<br><br>';
+
+echo $builder->update(['user' => 11, 'post' => 345, 'text' => 'Text'])
+    ->where()
+        ->add('test', 'between', [500, 700])
+    ->get();
+    
+/*
+    UPDATE `users` SET 
+        `user` = :u17,
+        `post` = :u18,
+        `text` = :u19 
+        WHERE (`test` BETWEEN :w20)
+*/    
+
+echo '<br><br>---UPDATE#2---<br><br>';
+echo $builder->update()
+    ->fields(['name', 'subname'])
+    ->values(['test', 'testus'])
+    ->where('or')
+        ->add('big', '<', 9)
+        ->add('big', '>', 18)
+    ->order('qwerty', 'desc')
+    ->limit(10, 20, 'offset')
+    ->get();
+    
+/*
+    UPDATE `users` SET
+        `name` = :u21,
+        `subname` = :u22
+        WHERE (`big` < :w23 OR `big` > :w24)
+        ORDER BY `qwerty` DESC
+        LIMIT 10 OFFSET 20
+*/    
+
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r(Placeholders::$placeholders, 1) . '</pre>';
@@ -149,6 +184,14 @@ Array
     [i14] => Oleg
     [i15] => oleg@gmail.com
     [i16] => 33
+    [u17] => 11
+    [u18] => 345
+    [u19] => Text
+    [w20] => 500 AND 700
+    [u21] => test
+    [u22] => testus
+    [w23] => 9
+    [w24] => 18
 )
 */
 
