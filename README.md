@@ -20,17 +20,17 @@ echo '---SELECT---<br><br>';
 
 echo $builder->select(['user_id' => 'id', 'name', 'email'])
     ->where()
-    ->add('id', '=', 15)
-    ->add('fid', 'not in', [1, 2, 3])
+        ->add('id', '=', 15)
+        ->add('fid', 'not in', [1, 2, 3])
     ->where('or')
-    ->add('bid', '>', '17')
-    ->add('fig', '>=', 177)
+        ->add('bid', '>', '17')
+        ->add('fig', '>=', 177)
     ->group('mmm')
-    ->add('t33')
+        ->add('t33')
     ->order('gid', 'desc')
-    ->add('giu')
-    ->add('did')
-    ->add('ffd', 'desc')
+        ->add('giu')
+        ->add('did')
+        ->add('ffd', 'desc')
     ->limit(5, 10, 'page')
     ->get();
 
@@ -45,10 +45,10 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
         LIMIT 45 OFFSET 5
 */
 
-echo '<br><br>---SELECT COUNT#1---<br><br>';
+echo '<br><br>---COUNT#1---<br><br>';
 echo $builder->count()
     ->where()
-    ->add('cid', '=', 1544)
+        ->add('cid', '=', 1544)
     ->group('ffff')
     ->order('ffgid', 'desc')
     ->limit(10, 20)
@@ -63,7 +63,7 @@ echo $builder->count()
         LIMIT 20 OFFSET 10
 */
 
-echo '<br><br>---SELECT COUNT#2---<br><br>';
+echo '<br><br>---COUNT#2---<br><br>';
 echo $builder->count('*', 'count')
     ->get();
 
@@ -87,7 +87,7 @@ echo '<br><br>---DELETE WITH WHERE---<br><br>';
 
 echo $builder->delete()
     ->where()
-    ->add('frrf', 'between', [12, 15])
+        ->add('frrf', 'between', [12, 15])
     ->get();
 
 /*
@@ -104,12 +104,18 @@ echo $builder->insert()
     ->get();
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i8,:i9,:i10),(:i11,:i12,:i13)
+    INSERT INTO `users` (`name`,`email`,`age`)
+                VALUES (:i8,:i9,:i10),
+                    (:i11,:i12,:i13)
 */
 
 echo '<br><br>---INSERT ARRAY(FIELDS => VALUES)---<br><br>';
 
-echo $builder->insert(['name' => 'Oleg', 'email' => 'oleg@gmail.com', 'age' => 33])
+echo $builder->insert([
+    'name' => 'Oleg',
+    'email' => 'oleg@gmail.com',
+    'age' => 33
+])
     ->get();
 
 /*
@@ -128,18 +134,19 @@ echo $builder->insert()
 
 echo '<br><br>---UPDATE#1---<br><br>';
 
-echo $builder->update(['user' => 11, 'post' => 345, 'text' => 'Text'])
+echo $builder->update([
+    'user' => 11,
+    'post' => 345,
+    'text' => 'Text'
+])
     ->where()
-        ->add('test', 'between', [500, 700])
+        ->add('test', 'regexp', '^.....$')
     ->get();
-    
+
 /*
-    UPDATE `users` SET 
-        `user` = :u17,
-        `post` = :u18,
-        `text` = :u19 
-        WHERE (`test` BETWEEN :w20)
-*/    
+    UPDATE `users` SET `user` = :u17,`post` = :u18,`text` = :u19
+        WHERE (`test` REGEXP :w20)
+*/
 
 echo '<br><br>---UPDATE#2---<br><br>';
 echo $builder->update()
@@ -151,15 +158,13 @@ echo $builder->update()
     ->order('qwerty', 'desc')
     ->limit(10, 20, 'offset')
     ->get();
-    
+
 /*
-    UPDATE `users` SET
-        `name` = :u21,
-        `subname` = :u22
+    UPDATE `users` SET `name` = :u21,`subname` = :u22
         WHERE (`big` < :w23 OR `big` > :w24)
         ORDER BY `qwerty` DESC
         LIMIT 10 OFFSET 20
-*/    
+*/
 
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
@@ -187,7 +192,7 @@ Array
     [u17] => 11
     [u18] => 345
     [u19] => Text
-    [w20] => 500 AND 700
+    [w20] => ^.....$
     [u21] => test
     [u22] => testus
     [w23] => 9

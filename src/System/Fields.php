@@ -2,8 +2,6 @@
 
 namespace Compolomus\SQLQueryBuilder\System;
 
-use Compolomus\SQLQueryBuilder\System\Helper;
-
 class Fields
 {
     private $fields = [];

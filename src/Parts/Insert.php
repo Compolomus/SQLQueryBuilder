@@ -2,10 +2,12 @@
 
 namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\Helper;
-use Compolomus\SQLQueryBuilder\System\Traits\Caller;
-use Compolomus\SQLQueryBuilder\System\Traits\SValues;
-use Compolomus\SQLQueryBuilder\System\Placeholders;
+use Compolomus\SQLQueryBuilder\System\{
+    Helper,
+    Traits\Caller,
+    Traits\SValues,
+    Placeholders
+};
 
 /**
  * @method string table()

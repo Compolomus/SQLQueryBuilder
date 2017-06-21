@@ -5,6 +5,7 @@ namespace Compolomus\SQLQueryBuilder\Parts;
 use Compolomus\SQLQueryBuilder\System\Traits\{
     Limit as TLimit,
     Where as TWhere,
+    GetParts,
     Caller
 };
 
@@ -13,7 +14,7 @@ use Compolomus\SQLQueryBuilder\System\Traits\{
  */
 class Delete
 {
-    use TLimit, TWhere, Caller;
+    use TLimit, TWhere, Caller, GetParts;
 
     public function __construct($id = 0)
     {
@@ -25,6 +26,6 @@ class Delete
     public function get()
     {
         return 'DELETE FROM ' . $this->table()
-            . (is_object($this->where) ? ' ' . $this->where->result() : '');
+            . $this->getParts();
     }
 }

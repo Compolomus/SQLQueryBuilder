@@ -13,7 +13,8 @@ class Conditions
         '>=',
         'like',
         'not like',
-        'regexp',
+        'regexp', // rlike
+        'not regexp', // not rlike
         'in',
         'not in',
         'between',

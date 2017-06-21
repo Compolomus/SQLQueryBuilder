@@ -2,8 +2,10 @@
 
 namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\Helper;
-use Compolomus\SQLQueryBuilder\System\Traits\Caller;
+use Compolomus\SQLQueryBuilder\System\{
+    Helper,
+    Traits\Caller
+};
 
 class Group
 {
