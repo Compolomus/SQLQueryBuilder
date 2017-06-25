@@ -48,6 +48,7 @@ class Helper
 
     public static function uid($prefix)
     {
-        return str_replace('.', '', substr(uniqid($prefix, true), 12, -4));
+        $str = uniqid(strtoupper($prefix) . '-', true);
+        return str_replace('.', '', substr($str, 0, 2) . substr($str, 12, -4));
     }
 }

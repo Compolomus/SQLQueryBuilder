@@ -10,8 +10,6 @@
 
 use Compolomus\SQLQueryBuilder\Builder;
 
-use Compolomus\SQLQueryBuilder\System\Placeholders;
-
 require __DIR__ . '/vendor/autoload.php';
 
 $builder = new Builder('users');
@@ -166,8 +164,6 @@ echo $builder->update()
 */
 
 echo '<br><br>---PLACEHOLDERS---<br><br>';
-
-echo count($builder->placeholders());
 
 echo '<pre>' . print_r($builder->placeholders(), 1) . '</pre>';
 
