@@ -54,9 +54,12 @@ class Where
     public function result()
     {
         $array = [];
+        $placeholders = [];
         foreach ($this->conditions as $key => $condition) {
+            $placeholders += $condition->placeholders()->get();
             $array[] = '(' . Helper::concatWhere($condition->conditions(), $this->whereType[$key]) . ')';
         }
+        $this->addPlaceholders($placeholders);
         return 'WHERE ' . Helper::concatWhere($array, 'and');
     }
 }

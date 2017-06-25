@@ -4,16 +4,20 @@ namespace Compolomus\SQLQueryBuilder\System;
 
 class Placeholders
 {
-    public static $counter = 1;
-    
-    public static $placeholders = [];
-    
-    public static function count() {
-        return count(self::$placeholders);
+    private $placeholders = [];
+
+    public function __construct($placeholders = []) // reset
+    {
+        $this->placeholders = $placeholders;
     }
-    
-    public static function add($key, $value) {
-        self::$placeholders[$key . self::$counter] = $value;
-        self::$counter++;
+
+    public function set($key, $value)
+    {
+        $this->placeholders[$key] = $value;
+    }
+
+    public function get()
+    {
+        return $this->placeholders;
     }
 }

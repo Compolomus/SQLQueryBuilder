@@ -4,12 +4,12 @@ namespace Compolomus\SQLQueryBuilder\Parts;
 
 use Compolomus\SQLQueryBuilder\System\{
     Helper,
-    Placeholders,
     Traits\Caller,
     Traits\Limit as TLimit,
     Traits\Where as TWhere,
     Traits\Order as TOrder,
-    Traits\GetParts
+    Traits\GetParts,
+    Traits\Placeholders
 };
 
 /**
@@ -17,7 +17,7 @@ use Compolomus\SQLQueryBuilder\System\{
  */
 class Update extends Insert
 {
-    use Caller, TLimit, TWhere, TOrder, GetParts;
+    use Caller, TLimit, TWhere, TOrder, GetParts, Placeholders;
 
     private $result;
 
@@ -25,8 +25,9 @@ class Update extends Insert
     {
         $result = [];
         foreach ($values as $value) {
-            $result[] = ':u' . Placeholders::$counter;
-            Placeholders::add('u', $value);
+            $key = Helper::uid('u');
+            $result[] = ':' . $key;
+            $this->placeholders()->set($key, $value);
         }
         $this->result = implode(',',
             array_map(function($field, $value) {
@@ -37,6 +38,7 @@ class Update extends Insert
 
     public function get()
     {
+        $this->addPlaceholders($this->placeholders()->get());
         return 'UPDATE ' . $this->table() . ' SET '
             . $this->result
             . $this->getParts();

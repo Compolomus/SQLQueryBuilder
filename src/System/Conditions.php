@@ -4,6 +4,8 @@ namespace Compolomus\SQLQueryBuilder\System;
 
 class Conditions
 {
+    use Traits\Placeholders;
+
     private $conditionTypes = [
         '=',
         '!=', // <>
@@ -37,9 +39,10 @@ class Conditions
         if (!in_array(strtolower($condition), $this->conditionTypes)) {
             throw new InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
         }
-        $this->conditions[] = Helper::escapeField($field) . ' ' . strtoupper($condition) . ' :' . 'w' . Placeholders::$counter;
+        $key = Helper::uid('w');
         $value = $this->type($condition, $value);
-        Placeholders::add('w', $value);
+        $this->placeholders()->set($key, $value);
+        $this->conditions[] = Helper::escapeField($field) . ' ' . strtoupper($condition) . ' :' . $key;
     }
 
     public function type($condition, $value)

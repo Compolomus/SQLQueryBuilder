@@ -45,4 +45,9 @@ class Helper
     {
         return $field . ' = ' . $value;
     }
+
+    public static function uid($prefix)
+    {
+        return str_replace('.', '', substr(uniqid($prefix, true), 12, -4));
+    }
 }

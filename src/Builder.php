@@ -27,6 +27,8 @@ class Builder implements PDOInstanceInterface
 
     private $table;
 
+    private $placeholders = [];
+
     public function __construct($table = false)
     {
         if ($table) {
@@ -44,5 +46,16 @@ class Builder implements PDOInstanceInterface
     public function table()
     {
         return $this->table ? Helper::escapeField($this->table) : null;
+    }
+
+    public function placeholders()
+    {
+        return $this->placeholders;
+    }
+
+    public function addPlaceholders($placeholders)
+    {
+
+        $this->placeholders = $this->placeholders + $placeholders;
     }
 }
