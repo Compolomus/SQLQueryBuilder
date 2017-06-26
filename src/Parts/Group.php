@@ -1,15 +1,15 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\Parts;
+namespace Compolomus\LSQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\{
+use Compolomus\LSQLQueryBuilder\System\Traits\{
     Helper,
-    Traits\Caller
+    Caller
 };
 
 class Group
 {
-    use Caller;
+    use Caller, Helper;
 
     private $groups = [];
 
@@ -22,7 +22,7 @@ class Group
 
     public function add($field)
     {
-        $this->groups[] = Helper::escapeField($field);
+        $this->groups[] = $this->escapeField($field);
         return $this;
     }
 

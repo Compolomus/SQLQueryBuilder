@@ -1,10 +1,10 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Traits;
+namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
 trait PDOInstance
 {
-    private $db;
+    private $PDO;
 
     private $config;
 
@@ -16,7 +16,7 @@ trait PDOInstance
         $dbName = 'git';
         $dbUser = 'root';
         $dbPass = '';
-        $this->db = new \PDO('mysql:host=' . $dbHost . ';dbname=' . $dbName, $dbUser, $dbPass,
+        $this->PDO = new \PDO('mysql:host=' . $dbHost . ';dbname=' . $dbName, $dbUser, $dbPass,
             [
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
@@ -26,8 +26,8 @@ trait PDOInstance
         );
     }
 
-    public function db()
+    public function instance()
     {
-        return $this->db;
+        return $this->PDO;
     }
 }

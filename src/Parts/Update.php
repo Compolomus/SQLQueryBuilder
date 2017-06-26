@@ -1,15 +1,15 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\Parts;
+namespace Compolomus\LSQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\{
+use Compolomus\LSQLQueryBuilder\System\Traits\{
     Helper,
-    Traits\Caller,
-    Traits\Limit as TLimit,
-    Traits\Where as TWhere,
-    Traits\Order as TOrder,
-    Traits\GetParts,
-    Traits\Placeholders
+    Caller,
+    GetParts,
+    Placeholders,
+    Limit as TLimit,
+    Where as TWhere,
+    Order as TOrder
 };
 
 /**
@@ -17,7 +17,7 @@ use Compolomus\SQLQueryBuilder\System\{
  */
 class Update extends Insert
 {
-    use Caller, TLimit, TWhere, TOrder, GetParts, Placeholders;
+    use Caller, TLimit, TWhere, TOrder, GetParts, Placeholders, Helper;
 
     private $result;
 
@@ -25,7 +25,7 @@ class Update extends Insert
     {
         $result = [];
         foreach ($values as $value) {
-            $key = Helper::uid('u');
+            $key = $this->uid('u');
             $result[] = ':' . $key;
             $this->placeholders()->set($key, $value);
         }
@@ -33,7 +33,7 @@ class Update extends Insert
             array_map(function($field, $value) {
                 return $field . ' = ' . $value;
             }
-                , Helper::escapeField($this->fields), $result));
+                , $this->escapeField($this->fields), $result));
     }
 
     public function get()

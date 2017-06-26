@@ -1,16 +1,17 @@
-# Koenig SQLQueryBuilder
+# Koenig LSQLQueryBuilder
 
 [![License](https://img.shields.io/badge/license-GPL%20v.3-blue.svg?style=plastic)](https://www.gnu.org/licenses/gpl-3.0-standalone.html)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Compolomus/SQLQueryBuilder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Compolomus/SQLQueryBuilder/?branch=master)
+
 [![Build Status](https://scrutinizer-ci.com/g/Compolomus/SQLQueryBuilder/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Compolomus/SQLQueryBuilder/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Compolomus/SQLQueryBuilder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Compolomus/SQLQueryBuilder/?branch=master)
+[![Code Climate](https://codeclimate.com/github/Compolomus/SQLQueryBuilder/badges/gpa.svg)](https://codeclimate.com/github/Compolomus/SQLQueryBuilder)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/783c680b-cf5e-49ec-bc21-c4d50f257974/mini.png)](https://insight.sensiolabs.com/projects/783c680b-cf5e-49ec-bc21-c4d50f257974)
+[![Downloads](https://poser.pugx.org/compolomus/light-sql-query-builder/downloads)](https://packagist.org/packages/compolomus/light-sql-query-builder)
 
 ## Применение:
 
 ```php
-
-use Compolomus\SQLQueryBuilder\Builder;
-
-use Compolomus\SQLQueryBuilder\System\Placeholders;
+use Compolomus\LSQLQueryBuilder\Builder;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -37,8 +38,8 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
 /*
     SELECT `user_id` AS `id`,`name`,`email`
         FROM `users`
-        WHERE (`id` = :w1 AND `fid` NOT IN :w2)
-            AND (`bid` > :w3 OR `fig` >= :w4)
+        WHERE (`id` = :w1{uniqid} AND `fid` NOT IN :w2{uniqid})
+            AND (`bid` > :w3{uniqid} OR `fig` >= :w4{uniqid})
         GROUP BY `mmm`,`t33`
         ORDER BY `giu`, `did` ASC,
                  `gid`, `ffd` DESC
@@ -57,7 +58,7 @@ echo $builder->count()
 /*
     SELECT COUNT(*)
         FROM `users`
-        WHERE (`cid` = :w5)
+        WHERE (`cid` = :w5{uniqid})
         GROUP BY `ffff`
         ORDER BY `ffgid` DESC
         LIMIT 20 OFFSET 10
@@ -72,7 +73,6 @@ echo $builder->count('*', 'count')
         FROM `users`
 */
 
-
 echo '<br><br>---DELETE BY ID---<br><br>';
 
 echo $builder->delete(5)
@@ -80,7 +80,7 @@ echo $builder->delete(5)
 
 /*
     DELETE FROM `users`
-        WHERE (`id` = :w6)
+        WHERE (`id` = :w6{uniqid})
 */
 
 echo '<br><br>---DELETE WITH WHERE---<br><br>';
@@ -92,7 +92,7 @@ echo $builder->delete()
 
 /*
     DELETE FROM `users`
-        WHERE (`frrf` BETWEEN :w7)
+        WHERE (`frrf` BETWEEN :w7{uniqid})
 */
 
 echo '<br><br>---INSERT FIELDS AND VALUES---<br><br>';
@@ -105,8 +105,8 @@ echo $builder->insert()
 
 /*
     INSERT INTO `users` (`name`,`email`,`age`)
-                VALUES (:i8,:i9,:i10),
-                    (:i11,:i12,:i13)
+                VALUES (:i8{uniqid},:i9{uniqid},:i10{uniqid}),
+                    (:i11{uniqid},:i12{uniqid},:i13{uniqid})
 */
 
 echo '<br><br>---INSERT ARRAY(FIELDS => VALUES)---<br><br>';
@@ -119,7 +119,7 @@ echo $builder->insert([
     ->get();
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i14,:i15,:i16)
+    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i14{uniqid},:i15{uniqid},:i16{uniqid})
 */
 
 echo '<br><br>---INSERT PREPARE WITH FIELDS---<br><br>';
@@ -144,8 +144,8 @@ echo $builder->update([
     ->get();
 
 /*
-    UPDATE `users` SET `user` = :u17,`post` = :u18,`text` = :u19
-        WHERE (`test` REGEXP :w20)
+    UPDATE `users` SET `user` = :u17{uniqid},`post` = :u18{uniqid},`text` = :u19{uniqid}
+        WHERE (`test` REGEXP :w20{uniqid})
 */
 
 echo '<br><br>---UPDATE#2---<br><br>';
@@ -160,43 +160,43 @@ echo $builder->update()
     ->get();
 
 /*
-    UPDATE `users` SET `name` = :u21,`subname` = :u22
-        WHERE (`big` < :w23 OR `big` > :w24)
+    UPDATE `users` SET `name` = :u21{uniqid},`subname` = :u22{uniqid}
+        WHERE (`big` < :w23{uniqid} OR `big` > :w24{uniqid})
         ORDER BY `qwerty` DESC
         LIMIT 10 OFFSET 20
 */
 
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
-echo '<pre>' . print_r(Placeholders::$placeholders, 1) . '</pre>';
+echo '<pre>' . print_r($builder->placeholders(), 1) . '</pre>';
 
 /*
 Array
 (
-    [w1] => 15
-    [w2] => (1,2,3)
-    [w3] => 17
-    [w4] => 177
-    [w5] => 1544
-    [w6] => 5
-    [w7] => 12 AND 15
-    [i8] => Vasya
-    [i9] => vasya@gmail.com
-    [i10] => 22
-    [i11] => Petya
-    [i12] => petya@gmail.com
-    [i13] => 24
-    [i14] => Oleg
-    [i15] => oleg@gmail.com
-    [i16] => 33
-    [u17] => 11
-    [u18] => 345
-    [u19] => Text
-    [w20] => ^.....$
-    [u21] => test
-    [u22] => testus
-    [w23] => 9
-    [w24] => 18
+    [w1{uniqid}] => 15
+    [w2{uniqid}] => (1,2,3)
+    [w3{uniqid}] => 17
+    [w4{uniqid}] => 177
+    [w5{uniqid}] => 1544
+    [w6{uniqid}] => 5
+    [w7{uniqid}] => 12 AND 15
+    [i8{uniqid}] => Vasya
+    [i9{uniqid}] => vasya@gmail.com
+    [i10{uniqid}] => 22
+    [i11{uniqid}] => Petya
+    [i12{uniqid}] => petya@gmail.com
+    [i13{uniqid}] => 24
+    [i14{uniqid}] => Oleg
+    [i15{uniqid}] => oleg@gmail.com
+    [i16{uniqid}] => 33
+    [u17{uniqid}] => 11
+    [u18{uniqid}] => 345
+    [u19{uniqid}] => Text
+    [w20{uniqid}] => ^.....$
+    [u21{uniqid}] => test
+    [u22{uniqid}] => testus
+    [w23{uniqid}] => 9
+    [w24{uniqid}] => 18
 )
 */
 

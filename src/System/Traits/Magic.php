@@ -1,6 +1,6 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Traits;
+namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
 trait Magic
 {
@@ -28,7 +28,7 @@ trait Magic
 
     public function __call($name, $args)
     {
-        $class = "Compolomus\\SQLQueryBuilder\\Parts\\" . ucfirst($name);
+        $class = "Compolomus\\LSQLQueryBuilder\\Parts\\" . ucfirst($name);
         if (class_exists($class)) {
             $this->$name = new $class(...$args);
             $this->$name->base($this);

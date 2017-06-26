@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\Parts;
+namespace Compolomus\LSQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\Traits\{
+use Compolomus\LSQLQueryBuilder\System\Traits\{
     Limit as TLimit,
     Where as TWhere,
     GetParts,
@@ -16,10 +16,10 @@ class Delete
 {
     use TLimit, TWhere, Caller, GetParts;
 
-    public function __construct($id = 0)
+    public function __construct($did = 0, $field = 'id')
     {
-        if ($id) {
-            $this->where()->add('id', '=', $id);
+        if ($did) {
+            $this->where()->add($field, '=', $did);
         }
     }
 

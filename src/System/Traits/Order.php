@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Traits;
+namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
-use Compolomus\SQLQueryBuilder\Parts\Order as Porder;
+use Compolomus\LSQLQueryBuilder\Parts\Order as Porder;
 
 trait Order
 {

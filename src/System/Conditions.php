@@ -1,10 +1,10 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System;
+namespace Compolomus\LSQLQueryBuilder\System;
 
 class Conditions
 {
-    use Traits\Placeholders;
+    use Traits\Placeholders, Traits\Helper;
 
     private $conditionTypes = [
         '=',
@@ -37,12 +37,12 @@ class Conditions
     public function add($field, $condition, $value)
     {
         if (!in_array(strtolower($condition), $this->conditionTypes)) {
-            throw new InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
+            throw new \InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
         }
-        $key = Helper::uid('w');
+        $key = $this->uid('w');
         $value = $this->type($condition, $value);
         $this->placeholders()->set($key, $value);
-        $this->conditions[] = Helper::escapeField($field) . ' ' . strtoupper($condition) . ' :' . $key;
+        $this->conditions[] = $this->escapeField($field) . ' ' . strtoupper($condition) . ' :' . $key;
     }
 
     public function type($condition, $value)
