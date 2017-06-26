@@ -44,6 +44,12 @@ class Where
         $this->where($type);
     }
 
+    /**
+     * @param string $field
+     * @param string $cond
+     * @param mixed $value
+     * @return $this
+     */
     public function add($field, $cond, $value)
     {
         $this->condition()->add($field, $cond, $value);
