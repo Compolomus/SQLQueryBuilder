@@ -4,12 +4,12 @@ namespace Compolomus\SQLQueryBuilder\System;
 
 class Helper
 {
-    public static function concatWhere(array $conds, $separator = 'and')
+    public static function concatWhere(array $conditions, $separator = 'and')
     {
         if (in_array($separator, ['and', 'or'])) {
-            return implode(' ' . strtoupper($separator) . ' ', $conds);
+            return implode(' ' . strtoupper($separator) . ' ', $conditions);
         } else {
-            throw new InvalidArgumentException('Передан неверный тип |WHERE concate|');
+            throw new \InvalidArgumentException('Передан неверный тип |WHERE concate|');
         }
     }
 
@@ -26,7 +26,7 @@ class Helper
                 $result = implode(', ', self::escapeField($order)) . ' ' . strtoupper($type);
             }
         } else {
-            throw new InvalidArgumentException('Передан неверный тип |ORDER concate|');
+            throw new \InvalidArgumentException('Передан неверный тип |ORDER concate|');
         }
         return $result;
     }

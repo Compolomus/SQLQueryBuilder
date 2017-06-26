@@ -16,16 +16,13 @@ class Limit
 
     private $offset;
 
-    private $type;
-
     public function __construct($limit, $offset = 0, $type = 'limit')
     {
         if ($limit <= 0) {
-            throw new InvalidArgumentException('Отрицательный или нулевой аргумент |LIMIT construct|');
+            throw new \InvalidArgumentException('Отрицательный или нулевой аргумент |LIMIT construct|');
         }
         $this->limit = $limit;
         $this->offset = $offset;
-        $this->type = $type;
 
         $method = 't' . ucfirst($type);
         $this->$method();
@@ -46,7 +43,7 @@ class Limit
     public function tPage()
     {
         if ($this->offset <= 0) {
-            throw new InvalidArgumentException('Отрицательный или нулевой аргумент |PAGE construct|');
+            throw new \InvalidArgumentException('Отрицательный или нулевой аргумент |PAGE construct|');
         }
         $this->offset = ($this->offset - 1) * $this->limit;
     }

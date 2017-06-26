@@ -29,7 +29,7 @@ class Where
         if (in_array(strtolower($type), $this->whereTypes)) {
             $this->whereType[$this->counter] = $type;
         } else {
-            throw new InvalidArgumentException('DIE |WHERE construct|');
+            throw new \InvalidArgumentException('DIE |WHERE construct|');
         }
         $this->conditions[$this->counter] = new Conditions;
         return $this;
@@ -45,9 +45,9 @@ class Where
         $this->where($type);
     }
 
-    public function add($field, $condition, $value)
+    public function add($field, $cond, $value)
     {
-        $this->condition()->add($field, $condition, $value);
+        $this->condition()->add($field, $cond, $value);
         return $this;
     }
 

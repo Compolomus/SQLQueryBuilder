@@ -26,7 +26,7 @@ class Order
     public function add($field, $type = 'asc')
     {
         if (!in_array(strtolower($type), array_keys($this->orders))) {
-            throw new InvalidArgumentException('Передан неверный тип |ORDER add|');
+            throw new \InvalidArgumentException('Передан неверный тип |ORDER add|');
         }
         $this->orders[$type][] = $field;
         return $this;

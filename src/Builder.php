@@ -29,7 +29,7 @@ class Builder implements PDOInstanceInterface
 
     private $placeholders = [];
 
-    public function __construct($table = false)
+    public function __construct($table)
     {
         if ($table) {
             $this->setTable($table);
@@ -37,7 +37,7 @@ class Builder implements PDOInstanceInterface
         $this->getPDO();
     }
 
-    public function setTable($table)
+    private function setTable($table)
     {
         $this->table = $table;
         return $this;
@@ -45,7 +45,7 @@ class Builder implements PDOInstanceInterface
 
     public function table()
     {
-        return $this->table ? Helper::escapeField($this->table) : null;
+        return Helper::escapeField($this->table);
     }
 
     public function placeholders()

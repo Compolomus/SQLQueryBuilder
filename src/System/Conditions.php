@@ -37,7 +37,7 @@ class Conditions
     public function add($field, $condition, $value)
     {
         if (!in_array(strtolower($condition), $this->conditionTypes)) {
-            throw new InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
+            throw new \InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
         }
         $key = Helper::uid('w');
         $value = $this->type($condition, $value);

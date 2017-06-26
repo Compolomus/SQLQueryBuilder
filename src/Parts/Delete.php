@@ -16,10 +16,10 @@ class Delete
 {
     use TLimit, TWhere, Caller, GetParts;
 
-    public function __construct($id = 0)
+    public function __construct($did = 0, $field = 'id')
     {
-        if ($id) {
-            $this->where()->add('id', '=', $id);
+        if ($did) {
+            $this->where()->add($field, '=', $did);
         }
     }
 

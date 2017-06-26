@@ -1,11 +1,13 @@
 {
-  "name": "SQLQueryBuilder",
+  "name": "sql-query-builder",
   "description": "Light simple query builder",
   "license": "GPL-3.0",
   "keywords": [
     "sql",
     "mysql",
-    "query builder"
+    "query builder",
+    "PDO",
+    "sql builder"
   ],
   "type": "library",
   "authors": [
