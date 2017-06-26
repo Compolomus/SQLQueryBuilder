@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\Parts;
+namespace Compolomus\LSQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\Traits\{
+use Compolomus\LSQLQueryBuilder\System\Traits\{
     Limit as TLimit,
     Where as TWhere,
     GetParts,

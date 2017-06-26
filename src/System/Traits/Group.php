@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Traits;
+namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
-use Compolomus\SQLQueryBuilder\Parts\Group as Pgroup;
+use Compolomus\LSQLQueryBuilder\Parts\Group as Pgroup;
 
 trait Group
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Traits;
+namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
-use Compolomus\SQLQueryBuilder\Parts\Limit as Plimit;
+use Compolomus\LSQLQueryBuilder\Parts\Limit as Plimit;
 
 trait Limit
 {

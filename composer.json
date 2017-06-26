@@ -1,5 +1,5 @@
 {
-  "name": "compolomus/sql-query-builder",
+  "name": "compolomus/light-sql-query-builder",
   "description": "Light simple query builder",
   "license": "GPL-3.0",
   "keywords": [
@@ -18,7 +18,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Compolomus\\SQLQueryBuilder\\": "src/"
+      "Compolomus\\LSQLQueryBuilder\\": "src/"
     }
   },
   "require": {

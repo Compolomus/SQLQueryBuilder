@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Traits;
+namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
-use Compolomus\SQLQueryBuilder\System\Placeholders as SPlaceholders;
+use Compolomus\LSQLQueryBuilder\System\Placeholders as SPlaceholders;
 
 trait Placeholders
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder;
+namespace Compolomus\LSQLQueryBuilder;
 
-use Compolomus\SQLQueryBuilder\{
+use Compolomus\LSQLQueryBuilder\{
     System\Traits\Helper,
     System\Interfaces\PDOInstanceInterface,
     System\Traits\Magic,

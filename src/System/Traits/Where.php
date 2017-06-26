@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Traits;
+namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
-use Compolomus\SQLQueryBuilder\Parts\Where as Pwhere;
+use Compolomus\LSQLQueryBuilder\Parts\Where as Pwhere;
 
 trait Where
 {

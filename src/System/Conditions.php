@@ -1,6 +1,6 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System;
+namespace Compolomus\LSQLQueryBuilder\System;
 
 class Conditions
 {

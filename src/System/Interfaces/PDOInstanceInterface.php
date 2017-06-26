@@ -1,6 +1,6 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System\Interfaces;
+namespace Compolomus\LSQLQueryBuilder\System\Interfaces;
 
 interface PDOInstanceInterface
 {

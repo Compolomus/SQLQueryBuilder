@@ -1,8 +1,8 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\Parts;
+namespace Compolomus\LSQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\{
+use Compolomus\LSQLQueryBuilder\System\{
     Conditions,
     Traits\Helper,
     Traits\Caller
