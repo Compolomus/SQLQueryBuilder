@@ -10,11 +10,7 @@ class Fields
 
     public function __construct(array $fields, $count = false)
     {
-        if ($count) {
-            $this->count(key($fields), end($fields));
-        } else {
-            $this->setFields($fields);
-        }
+        $count ? $this->count(key($fields), end($fields)) : $this->setFields($fields);
     }
 
     public function setFields($fields)
@@ -22,15 +18,12 @@ class Fields
         $return = [];
         if (count($fields)) {
             foreach ($fields as $alias => $field) {
-                if (is_int($alias)) {
-                    $return[] = $this->escapeField($field);
-                } else {
-                    $return[] = $this->escapeField($alias) . ' AS ' . $this->escapeField($field);
-                }
+                $return[] = is_int($alias) ? $this->escapeField($field) : $this->escapeField($alias) . ' AS ' . $this->escapeField($field);
             }
         } else {
             $return[] = '*';
         }
+
         $this->fields = $return;
     }
 

@@ -6,11 +6,10 @@ trait Helper
 {
     public function concatWhere(array $conditions, $separator = 'and')
     {
-        if (in_array($separator, ['and', 'or'])) {
-            return implode(' ' . strtoupper($separator) . ' ', $conditions);
-        } else {
+        if (!in_array($separator, ['and', 'or'])) {
             throw new \InvalidArgumentException('Передан неверный тип |WHERE concate|');
         }
+        return implode(' ' . strtoupper($separator) . ' ', $conditions);
     }
 
     public function concatFields(array $fields)
@@ -20,25 +19,19 @@ trait Helper
 
     public function concatOrder(array $order, $type = 'asc')
     {
-        $result = '';
-        if (in_array($type, ['asc', 'desc'])) {
-            if (count($order) > 0) {
-                $result = implode(', ', $this->escapeField($order)) . ' ' . strtoupper($type);
-            }
-        } else {
+        if (!in_array($type, ['asc', 'desc'])) {
             throw new \InvalidArgumentException('Передан неверный тип |ORDER concate|');
+        }
+        $result = '';
+        if (count($order) > 0) {
+            $result = implode(', ', $this->escapeField($order)) . ' ' . strtoupper($type);
         }
         return $result;
     }
 
     public function escapeField($field)
     {
-        if (!is_array($field)) {
-            $field = '`' . $field . '`';
-        } else {
-            $field = array_map([$this, 'escapeField'], $field);
-        }
-        return $field;
+        return is_array($field) ? array_map([$this, 'escapeField'], $field) : '`' . $field . '`';
     }
 
     public function map($field, $value)
