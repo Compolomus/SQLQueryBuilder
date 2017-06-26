@@ -2,15 +2,15 @@
 
 namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\{
+use Compolomus\SQLQueryBuilder\System\Traits\{
     Helper,
-    Traits\Caller,
-    Traits\Placeholders
+    Caller,
+    Placeholders
 };
 
 class Limit
 {
-    use Caller, Placeholders;
+    use Caller, Placeholders, Helper;
 
     private $limit;
 
@@ -55,9 +55,9 @@ class Limit
 
     public function setPlaceholders()
     {
-        $offset = Helper::uid('l');
+        $offset = $this->uid('l');
         $this->placeholders()->set($offset, $this->offset);
-        $limit = Helper::uid('l');
+        $limit = $this->uid('l');
         $this->placeholders()->set($limit, $this->limit);
         return ['offset' => ':' . $offset, 'limit' => ':' . $limit];
     }

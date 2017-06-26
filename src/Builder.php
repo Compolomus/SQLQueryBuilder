@@ -3,7 +3,7 @@
 namespace Compolomus\SQLQueryBuilder;
 
 use Compolomus\SQLQueryBuilder\{
-    System\Helper,
+    System\Traits\Helper,
     System\Interfaces\PDOInstanceInterface,
     System\Traits\Magic,
     System\Traits\PDOInstance,
@@ -23,7 +23,7 @@ use Compolomus\SQLQueryBuilder\{
  */
 class Builder implements PDOInstanceInterface
 {
-    use PDOInstance, Magic;
+    use PDOInstance, Magic, Helper;
 
     private $table;
 
@@ -45,7 +45,7 @@ class Builder implements PDOInstanceInterface
 
     public function table()
     {
-        return Helper::escapeField($this->table);
+        return $this->escapeField($this->table);
     }
 
     public function placeholders()

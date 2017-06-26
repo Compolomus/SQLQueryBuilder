@@ -4,13 +4,13 @@ namespace Compolomus\SQLQueryBuilder\Parts;
 
 use Compolomus\SQLQueryBuilder\System\{
     Conditions,
-    Helper,
+    Traits\Helper,
     Traits\Caller
 };
 
 class Where
 {
-    use Caller;
+    use Caller, Helper;
 
     private $whereType;
 
@@ -25,12 +25,11 @@ class Where
 
     public function where($type = 'and')
     {
-        $this->counter++;
-        if (in_array(strtolower($type), $this->whereTypes)) {
-            $this->whereType[$this->counter] = $type;
-        } else {
+        if (!in_array(strtolower($type), $this->whereTypes)) {
             throw new \InvalidArgumentException('DIE |WHERE construct|');
         }
+        $this->counter++;
+        $this->whereType[$this->counter] = $type;
         $this->conditions[$this->counter] = new Conditions;
         return $this;
     }
@@ -57,9 +56,9 @@ class Where
         $placeholders = [];
         foreach ($this->conditions as $key => $condition) {
             $placeholders += $condition->placeholders()->get();
-            $array[] = '(' . Helper::concatWhere($condition->conditions(), $this->whereType[$key]) . ')';
+            $array[] = '(' . $this->concatWhere($condition->conditions(), $this->whereType[$key]) . ')';
         }
         $this->addPlaceholders($placeholders);
-        return 'WHERE ' . Helper::concatWhere($array, 'and');
+        return 'WHERE ' . $this->concatWhere($array, 'and');
     }
 }

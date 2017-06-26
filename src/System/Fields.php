@@ -4,6 +4,8 @@ namespace Compolomus\SQLQueryBuilder\System;
 
 class Fields
 {
+    use Traits\Helper;
+
     private $fields = [];
 
     public function __construct(array $fields, $count = false)
@@ -21,9 +23,9 @@ class Fields
         if (count($fields)) {
             foreach ($fields as $alias => $field) {
                 if (is_int($alias)) {
-                    $return[] = Helper::escapeField($field);
+                    $return[] = $this->escapeField($field);
                 } else {
-                    $return[] = Helper::escapeField($alias) . ' AS ' . Helper::escapeField($field);
+                    $return[] = $this->escapeField($alias) . ' AS ' . $this->escapeField($field);
                 }
             }
         } else {
@@ -35,13 +37,13 @@ class Fields
     public function count($field = '*', $alias = null)
     {
         if ($field != '*') {
-            $field = Helper::escapeField($field);
+            $field = $this->escapeField($field);
         }
-        $this->fields[] = 'COUNT(' . $field . ')' . (!is_null($alias) ? ' AS ' . Helper::escapeField($alias) : '');
+        $this->fields[] = 'COUNT(' . $field . ')' . (!is_null($alias) ? ' AS ' . $this->escapeField($alias) : '');
     }
 
     public function result()
     {
-        return Helper::concatFields($this->fields);
+        return $this->concatFields($this->fields);
     }
 }

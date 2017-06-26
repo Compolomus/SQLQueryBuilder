@@ -2,14 +2,14 @@
 
 namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\{
+use Compolomus\SQLQueryBuilder\System\Traits\{
     Helper,
-    Traits\Caller
+    Caller
 };
 
 class Order
 {
-    use Caller;
+    use Caller, Helper;
 
     private $orders = [
         'asc' => [],
@@ -35,8 +35,8 @@ class Order
     public function result()
     {
         $order = '';
-        $asc = Helper::concatOrder($this->orders['asc'], 'asc');
-        $desc = Helper::concatOrder($this->orders['desc'], 'desc');
+        $asc = $this->concatOrder($this->orders['asc'], 'asc');
+        $desc = $this->concatOrder($this->orders['desc'], 'desc');
         if ($asc | $desc) {
             $order = 'ORDER BY ' . $asc . ($asc & $desc ? ', ' : '') . $desc;
         }

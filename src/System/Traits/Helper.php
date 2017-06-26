@@ -1,10 +1,10 @@
 <?php
 
-namespace Compolomus\SQLQueryBuilder\System;
+namespace Compolomus\SQLQueryBuilder\System\Traits;
 
-class Helper
+trait Helper
 {
-    public static function concatWhere(array $conditions, $separator = 'and')
+    public function concatWhere(array $conditions, $separator = 'and')
     {
         if (in_array($separator, ['and', 'or'])) {
             return implode(' ' . strtoupper($separator) . ' ', $conditions);
@@ -13,17 +13,17 @@ class Helper
         }
     }
 
-    public static function concatFields(array $fields)
+    public function concatFields(array $fields)
     {
         return implode(',', $fields);
     }
 
-    public static function concatOrder(array $order, $type = 'asc')
+    public function concatOrder(array $order, $type = 'asc')
     {
         $result = '';
         if (in_array($type, ['asc', 'desc'])) {
             if (count($order) > 0) {
-                $result = implode(', ', self::escapeField($order)) . ' ' . strtoupper($type);
+                $result = implode(', ', $this->escapeField($order)) . ' ' . strtoupper($type);
             }
         } else {
             throw new \InvalidArgumentException('Передан неверный тип |ORDER concate|');
@@ -31,22 +31,22 @@ class Helper
         return $result;
     }
 
-    public static function escapeField($field)
+    public function escapeField($field)
     {
         if (!is_array($field)) {
             $field = '`' . $field . '`';
         } else {
-            $field = array_map([self, 'escapeField'], $field);
+            $field = array_map([$this, 'escapeField'], $field);
         }
         return $field;
     }
 
-    public static function map($field, $value)
+    public function map($field, $value)
     {
         return $field . ' = ' . $value;
     }
 
-    public static function uid($prefix)
+    public function uid($prefix)
     {
         $str = uniqid(strtoupper($prefix) . '-', true);
         return str_replace('.', '', substr($str, 0, 2) . substr($str, 12, -4));

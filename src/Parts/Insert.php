@@ -2,11 +2,11 @@
 
 namespace Compolomus\SQLQueryBuilder\Parts;
 
-use Compolomus\SQLQueryBuilder\System\{
+use Compolomus\SQLQueryBuilder\System\Traits\{
     Helper,
-    Traits\Caller,
-    Traits\SValues,
-    Traits\Placeholders
+    Caller,
+    SValues,
+    Placeholders
 };
 
 /**
@@ -14,7 +14,7 @@ use Compolomus\SQLQueryBuilder\System\{
  */
 class Insert
 {
-    use Caller, Placeholders;
+    use Caller, Placeholders, Helper;
 
     protected $fields = [];
 
@@ -46,7 +46,7 @@ class Insert
     {
         $result = [];
         foreach ($values as $value) {
-            $key = Helper::uid('i');
+            $key = $this->uid('i');
             $result[] = ':' . $key;
             $this->placeholders()->set($key, $value);
         }
@@ -57,7 +57,7 @@ class Insert
     {
         $this->addPlaceholders($this->placeholders()->get());
         return 'INSERT INTO ' . $this->table() . ' '
-            . (count($this->fields) ? '(' . implode(',', Helper::escapeField($this->fields)) . ')' : '')
+            . (count($this->fields) ? '(' . implode(',', $this->escapeField($this->fields)) . ')' : '')
             . ' VALUES '
             . (count($this->values)
                 ? implode(',', $this->values)
