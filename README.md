@@ -8,6 +8,10 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/783c680b-cf5e-49ec-bc21-c4d50f257974/mini.png)](https://insight.sensiolabs.com/projects/783c680b-cf5e-49ec-bc21-c4d50f257974)
 [![Downloads](https://poser.pugx.org/compolomus/light-sql-query-builder/downloads)](https://packagist.org/packages/compolomus/light-sql-query-builder)
 
+## Установка:
+
+composer require compolomus/light-sql-query-builder
+
 ## Применение:
 
 ```php
@@ -36,14 +40,14 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
     ->get();
 
 /*
-    SELECT `user_id` AS `id`,`name`,`email`
-        FROM `users`
-        WHERE (`id` = :w1{uniqid} AND `fid` NOT IN :w2{uniqid})
-            AND (`bid` > :w3{uniqid} OR `fig` >= :w4{uniqid})
-        GROUP BY `mmm`,`t33`
+    SELECT `user_id` AS `id`,`name`,`email` 
+        FROM `users` 
+        WHERE (`id` = :W-4e521848 AND `fid` NOT IN :W-80d99658) 
+          AND (`bid` > :W-80d50495 OR `fig` >= :W-80d65633) 
+        GROUP BY `mmm`,`t33` 
         ORDER BY `giu`, `did` ASC,
-                 `gid`, `ffd` DESC
-        LIMIT 45 OFFSET 5
+                 `gid`, `ffd` DESC 
+        LIMIT :L-33017614 OFFSET :L-33097564
 */
 
 echo '<br><br>---COUNT#1---<br><br>';
@@ -56,12 +60,12 @@ echo $builder->count()
     ->get();
 
 /*
-    SELECT COUNT(*)
-        FROM `users`
-        WHERE (`cid` = :w5{uniqid})
-        GROUP BY `ffff`
-        ORDER BY `ffgid` DESC
-        LIMIT 20 OFFSET 10
+    SELECT COUNT(*) 
+        FROM `users` 
+        WHERE (`cid` = :W-33066156) 
+        GROUP BY `ffff` 
+        ORDER BY `ffgid` DESC 
+        LIMIT :L-33020415 OFFSET :L-33050757
 */
 
 echo '<br><br>---COUNT#2---<br><br>';
@@ -80,7 +84,15 @@ echo $builder->delete(5)
 
 /*
     DELETE FROM `users`
-        WHERE (`id` = :w6{uniqid})
+        WHERE (`id` = :W-5be88440)
+*/
+
+echo $builder->delete(15, 'userid')
+    ->get();
+
+/*
+    DELETE FROM `users`
+        WHERE (`userid` = :W-5be72385)
 */
 
 echo '<br><br>---DELETE WITH WHERE---<br><br>';
@@ -92,7 +104,7 @@ echo $builder->delete()
 
 /*
     DELETE FROM `users`
-        WHERE (`frrf` BETWEEN :w7{uniqid})
+        WHERE (`frrf` BETWEEN :W-5be16681)
 */
 
 echo '<br><br>---INSERT FIELDS AND VALUES---<br><br>';
@@ -105,8 +117,8 @@ echo $builder->insert()
 
 /*
     INSERT INTO `users` (`name`,`email`,`age`)
-                VALUES (:i8{uniqid},:i9{uniqid},:i10{uniqid}),
-                    (:i11{uniqid},:i12{uniqid},:i13{uniqid})
+                VALUES (:I-9a663499,:I-9a655473,:I-9a632999),
+                       (:I-9a665659,:I-9a609771,:I-9a638944)
 */
 
 echo '<br><br>---INSERT ARRAY(FIELDS => VALUES)---<br><br>';
@@ -119,7 +131,7 @@ echo $builder->insert([
     ->get();
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i14{uniqid},:i15{uniqid},:i16{uniqid})
+    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:I-9a670814,:I-9a657832,:I-9a600062)
 */
 
 echo '<br><br>---INSERT PREPARE WITH FIELDS---<br><br>';
@@ -144,8 +156,8 @@ echo $builder->update([
     ->get();
 
 /*
-    UPDATE `users` SET `user` = :u17{uniqid},`post` = :u18{uniqid},`text` = :u19{uniqid}
-        WHERE (`test` REGEXP :w20{uniqid})
+    UPDATE `users` SET `user` = :U-9a621176,`post` = :U-9a631060,`text` = :U-9a686956 
+        WHERE (`test` REGEXP :W-9a602213)
 */
 
 echo '<br><br>---UPDATE#2---<br><br>';
@@ -160,10 +172,10 @@ echo $builder->update()
     ->get();
 
 /*
-    UPDATE `users` SET `name` = :u21{uniqid},`subname` = :u22{uniqid}
-        WHERE (`big` < :w23{uniqid} OR `big` > :w24{uniqid})
-        ORDER BY `qwerty` DESC
-        LIMIT 10 OFFSET 20
+    UPDATE `users` SET `name` = :U-9a610261,`subname` = :U-9a651523 
+        WHERE (`big` < :W-9a646315 OR `big` > :W-9a672443) 
+        ORDER BY `qwerty` DESC 
+        LIMIT :L-9a608262 OFFSET :L-9a649802
 */
 
 echo '<br><br>---PLACEHOLDERS---<br><br>';
@@ -173,30 +185,37 @@ echo '<pre>' . print_r($builder->placeholders(), 1) . '</pre>';
 /*
 Array
 (
-    [w1{uniqid}] => 15
-    [w2{uniqid}] => (1,2,3)
-    [w3{uniqid}] => 17
-    [w4{uniqid}] => 177
-    [w5{uniqid}] => 1544
-    [w6{uniqid}] => 5
-    [w7{uniqid}] => 12 AND 15
-    [i8{uniqid}] => Vasya
-    [i9{uniqid}] => vasya@gmail.com
-    [i10{uniqid}] => 22
-    [i11{uniqid}] => Petya
-    [i12{uniqid}] => petya@gmail.com
-    [i13{uniqid}] => 24
-    [i14{uniqid}] => Oleg
-    [i15{uniqid}] => oleg@gmail.com
-    [i16{uniqid}] => 33
-    [u17{uniqid}] => 11
-    [u18{uniqid}] => 345
-    [u19{uniqid}] => Text
-    [w20{uniqid}] => ^.....$
-    [u21{uniqid}] => test
-    [u22{uniqid}] => testus
-    [w23{uniqid}] => 9
-    [w24{uniqid}] => 18
+    [W-dee57705] => 15
+    [W-dee62202] => (1,2,3)
+    [W-dee91458] => 17
+    [W-dee45671] => 177
+    [L-1d640579] => 45
+    [L-1d625851] => 5
+    [W-5be82015] => 1544
+    [L-5be78159] => 20
+    [L-5be00543] => 10
+    [W-5be88440] => 5
+    [W-5be72385] => 15
+    [W-5be16681] => 12 AND 15
+    [I-9a663499] => Vasya
+    [I-9a655473] => vasya@gmail.com
+    [I-9a632999] => 22
+    [I-9a665659] => Petya
+    [I-9a609771] => petya@gmail.com
+    [I-9a638944] => 24
+    [I-9a670814] => Oleg
+    [I-9a657832] => oleg@gmail.com
+    [I-9a600062] => 33
+    [U-9a621176] => 11
+    [U-9a631060] => 345
+    [U-9a686956] => Text
+    [W-9a602213] => ^.....$
+    [U-9a610261] => test
+    [U-9a651523] => testus
+    [W-9a646315] => 9
+    [W-9a672443] => 18
+    [L-9a608262] => 10
+    [L-9a649802] => 20
 )
 */
 
