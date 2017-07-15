@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
 trait GetParts
 {
-    public function getParts($fields = ['where', 'group', 'order', 'limit'])
+    public function getParts(array $fields = ['where', 'group', 'order', 'limit']): string
     {
         $result = '';
         foreach ($fields as $value) {

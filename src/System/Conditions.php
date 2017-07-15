@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\System;
 
@@ -29,12 +29,12 @@ class Conditions
     {
     }
 
-    public function conditions()
+    public function conditions(): array
     {
         return $this->conditions;
     }
 
-    public function add($field, $condition, $value)
+    public function add(string $field, string $condition, $value): void
     {
         if (!in_array(strtolower($condition), $this->conditionTypes)) {
             throw new \InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
@@ -45,7 +45,7 @@ class Conditions
         $this->conditions[] = $this->escapeField($field) . ' ' . strtoupper($condition) . ' :' . $key;
     }
 
-    public function type($condition, $value)
+    public function type(string $condition, $value)
     {
         return in_array($condition, ['in', 'not in'])
             ? '(' . implode(',', $value) . ')'

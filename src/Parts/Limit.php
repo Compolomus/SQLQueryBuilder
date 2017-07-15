@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -16,7 +16,7 @@ class Limit
 
     private $offset;
 
-    public function __construct($limit, $offset = 0, $type = 'limit')
+    public function __construct(int $limit, int $offset = 0, string $type = 'limit')
     {
         if ($limit <= 0) {
             throw new \InvalidArgumentException('Отрицательный или нулевой аргумент |LIMIT construct|');
@@ -28,32 +28,34 @@ class Limit
         $this->$method();
     }
 
-    public function tLimit()
+    public function tLimit(): void
     {
         if (!$this->offset) {
             $this->list();
         }
     }
 
-    public function tOffset()
+    public function tOffset(): void
     {
         $this->list();
     }
 
-    public function tPage()
+    public function tPage(): ?\Exception
     {
         if ($this->offset <= 0) {
             throw new \InvalidArgumentException('Отрицательный или нулевой аргумент |PAGE construct|');
+        } else {
+            $this->offset = ($this->offset - 1) * $this->limit;
+            return null;
         }
-        $this->offset = ($this->offset - 1) * $this->limit;
     }
 
-    private function list()
+    private function list(): array
     {
         return list($this->limit, $this->offset) = [$this->offset, $this->limit];
     }
 
-    public function setPlaceholders()
+    public function setPlaceholders(): array
     {
         $offset = $this->uid('l');
         $this->placeholders()->set($offset, $this->offset);
@@ -62,7 +64,7 @@ class Limit
         return ['offset' => ':' . $offset, 'limit' => ':' . $limit];
     }
 
-    public function result()
+    public function result(): string
     {
         $placeholders = $this->setPlaceholders();
         $this->addPlaceholders($this->placeholders()->get());

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -30,19 +30,19 @@ class Insert
         }
     }
 
-    public function fields(array $fields)
+    public function fields(array $fields): Insert
     {
         $this->fields = $fields;
         return $this;
     }
 
-    public function values($values)
+    public function values(array $values): Insert
     {
         $this->values[] = $this->set($values);
         return $this;
     }
 
-    protected function set($values)
+    protected function set(array $values): string
     {
         $result = [];
         foreach ($values as $value) {
@@ -53,7 +53,7 @@ class Insert
         return '(' . implode(',', $result) . ')';
     }
 
-    public function get()
+    public function get(): string
     {
         $this->addPlaceholders($this->placeholders()->get());
         return 'INSERT INTO ' . $this->table() . ' '

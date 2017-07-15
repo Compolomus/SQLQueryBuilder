@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -13,20 +13,20 @@ class Group
 
     private $groups = [];
 
-    public function __construct($field = null)
+    public function __construct(?string $field = null)
     {
         if (!is_null($field)) {
             $this->add($field);
         }
     }
 
-    public function add($field)
+    public function add(string $field): Group
     {
         $this->groups[] = $this->escapeField($field);
         return $this;
     }
 
-    public function result()
+    public function result(): string
     {
         $group = '';
         if (count($this->groups)) {

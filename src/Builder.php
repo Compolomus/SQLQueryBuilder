@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder;
 
@@ -27,32 +27,31 @@ class Builder
 
     private $placeholders = [];
 
-    public function __construct($table)
+    public function __construct(string $table)
     {
         if ($table) {
             $this->setTable($table);
         }
     }
 
-    private function setTable($table)
+    private function setTable(string $table): Builder
     {
         $this->table = $table;
         return $this;
     }
 
-    public function table()
+    public function table(): string
     {
         return $this->escapeField($this->table);
     }
 
-    public function placeholders()
+    public function placeholders(): array
     {
         return $this->placeholders;
     }
 
-    public function addPlaceholders($placeholders)
+    public function addPlaceholders($placeholders): void
     {
-
         $this->placeholders = $this->placeholders + $placeholders;
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
@@ -8,7 +8,7 @@ trait Group
 {
     private $group;
 
-    public function group($field = null)
+    public function group(?string $field = null): PGroup
     {
         $this->group = new Pgroup($field);
         $this->group->base($this);

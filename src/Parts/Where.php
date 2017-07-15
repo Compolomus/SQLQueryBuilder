@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -23,7 +23,7 @@ class Where
 
     private $conditions;
 
-    public function where($type = 'and')
+    public function where(string $type = 'and'): Where
     {
         if (!in_array(strtolower($type), $this->whereTypes)) {
             throw new \InvalidArgumentException('DIE |WHERE construct|');
@@ -34,12 +34,12 @@ class Where
         return $this;
     }
 
-    public function condition()
+    public function condition(): Conditions
     {
         return end($this->conditions);
     }
 
-    public function __construct($type = 'and')
+    public function __construct(string $type = 'and')
     {
         $this->where($type);
     }
@@ -50,13 +50,13 @@ class Where
      * @param mixed $value
      * @return $this
      */
-    public function add($field, $cond, $value)
+    public function add(string $field, string $cond, $value): Where
     {
         $this->condition()->add($field, $cond, $value);
         return $this;
     }
 
-    public function result()
+    public function result(): string
     {
         $array = [];
         $placeholders = [];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
@@ -8,7 +8,7 @@ trait Where
 {
     private $where;
 
-    public function where($type = 'and')
+    public function where(string $type = 'and'): Pwhere
     {
         $this->where = new Pwhere($type);
         $this->where->base($this);

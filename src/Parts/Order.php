@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -16,23 +16,23 @@ class Order
         'desc' => []
     ];
 
-    public function __construct($field = null, $type = 'asc')
+    public function __construct(?string $field = null, string $type = 'asc')
     {
         if (!is_null($field)) {
+            if (!in_array(strtolower($type), array_keys($this->orders))) {
+                throw new \InvalidArgumentException('Передан неверный тип |ORDER add|');
+            }
             $this->add($field, $type);
         }
     }
 
-    public function add($field, $type = 'asc')
+    public function add(string $field, string $type = 'asc'): Order
     {
-        if (!in_array(strtolower($type), array_keys($this->orders))) {
-            throw new \InvalidArgumentException('Передан неверный тип |ORDER add|');
-        }
         $this->orders[$type][] = $field;
         return $this;
     }
 
-    public function result()
+    public function result(): string
     {
         $order = '';
         $asc = $this->concatOrder($this->orders['asc'], 'asc');

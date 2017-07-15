@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\System;
 
@@ -8,7 +8,7 @@ class Fields
 
     private $fields = [];
 
-    public function __construct(array $fields, $count = false)
+    public function __construct(array $fields, bool $count = false)
     {
         $count ? $this->count(key($fields), end($fields)) : $this->setFields($fields);
     }
@@ -27,7 +27,7 @@ class Fields
         $this->fields = $return;
     }
 
-    public function count($field = '*', $alias = null)
+    public function count(string $field = '*', ?string $alias = null): void
     {
         if ($field != '*') {
             $field = $this->escapeField($field);
@@ -35,7 +35,7 @@ class Fields
         $this->fields[] = 'COUNT(' . $field . ')' . (!is_null($alias) ? ' AS ' . $this->escapeField($alias) : '');
     }
 
-    public function result()
+    public function result(): string
     {
         return $this->concatFields($this->fields);
     }

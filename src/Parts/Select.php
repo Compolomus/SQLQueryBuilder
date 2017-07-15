@@ -21,17 +21,17 @@ class Select
 
     protected $fields;
 
-    public function __construct(array $fields = [], $count = false)
+    public function __construct(array $fields = [], bool $count = false)
     {
         $this->fields = new Fields($fields, $count);
     }
 
-    public function getFields()
+    public function getFields(): string
     {
         return $this->fields->result();
     }
 
-    public function get()
+    public function get(): string
     {
         return 'SELECT ' . $this->getFields() . ' FROM '
             . $this->table()

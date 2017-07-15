@@ -178,6 +178,15 @@ echo $builder->update()
         LIMIT :L-9a608262 OFFSET :L-9a649802
 */
 
+echo '<br><br>---UPDATE#3---<br><br>';
+echo $builder->update()
+    ->fields(['name', 'email', 'age'])
+    ->get();
+
+/*
+    UPDATE `users` SET `name` = ?,`email` = ?,`age` = ?
+*/
+
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r($builder->placeholders(), 1) . '</pre>';

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -16,14 +16,14 @@ class Delete
 {
     use TLimit, TWhere, Caller, GetParts;
 
-    public function __construct($did = 0, $field = 'id')
+    public function __construct(int $did = 0, string $field = 'id')
     {
         if ($did) {
             $this->where()->add($field, '=', $did);
         }
     }
 
-    public function get()
+    public function get(): string
     {
         return 'DELETE FROM ' . $this->table()
             . $this->getParts();
