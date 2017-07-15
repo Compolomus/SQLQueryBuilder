@@ -4,9 +4,7 @@ namespace Compolomus\LSQLQueryBuilder;
 
 use Compolomus\LSQLQueryBuilder\{
     System\Traits\Helper,
-    System\Interfaces\PDOInstanceInterface,
     System\Traits\Magic,
-    System\Traits\PDOInstance,
     Parts\Insert,
     Parts\Select,
     Parts\Update,
@@ -21,9 +19,9 @@ use Compolomus\LSQLQueryBuilder\{
  * @method Delete delete(integer $id)
  * @method Count count(string $field, string|null $alias)
  */
-class Builder implements PDOInstanceInterface
+class Builder
 {
-    use PDOInstance, Magic, Helper;
+    use Magic, Helper;
 
     private $table;
 
@@ -34,7 +32,6 @@ class Builder implements PDOInstanceInterface
         if ($table) {
             $this->setTable($table);
         }
-        $this->getPDO();
     }
 
     private function setTable($table)
