@@ -187,6 +187,17 @@ echo $builder->update()
     UPDATE `users` SET `name` = ?,`email` = ?,`age` = ?
 */
 
+echo '<br><br>---JOIN#1---<br><br>';
+echo $builder->select()
+    ->join('test', [['id', 'tid'], ['did', 'mid']], 't', 'cross')
+    ->get();
+
+/*
+     SELECT * FROM `users` 
+        CROSS JOIN `test` AS `t` 
+        ON `users`.`id` = `t`.`tid` AND `users`.`did` = `t`.`mid`
+*/
+
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r($builder->placeholders(), 1) . '</pre>';

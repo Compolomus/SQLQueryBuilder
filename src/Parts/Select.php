@@ -21,6 +21,8 @@ class Select
 
     protected $fields;
 
+    protected $join = null;
+
     public function __construct(array $fields = [], bool $count = false)
     {
         $this->fields = new Fields($fields, $count);
@@ -31,10 +33,18 @@ class Select
         return $this->fields->result();
     }
 
+    public function join(string $table, ?array $on = null, ?string $alias = null, string $joinType = 'left'): Select
+    {
+        $this->join = new Join($table, $on, $alias, $joinType);
+        $this->join->setParentTable($this->table());
+        return $this;
+    }
+
     public function get(): string
     {
         return 'SELECT ' . $this->getFields() . ' FROM '
             . $this->table()
+            . (!is_null($this->join) ? $this->join->get() : '')
             . $this->getParts();
     }
 }
