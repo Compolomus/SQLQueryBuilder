@@ -189,13 +189,54 @@ echo $builder->update()
 
 echo '<br><br>---JOIN#1---<br><br>';
 echo $builder->select()
-    ->join('test', [['id', 'tid'], ['did', 'mid']], 't', 'cross')
+    ->join('test', 't', [['id', 'tid'], ['did', 'mid']], 'cross')
     ->get();
 
 /*
-     SELECT * FROM `users` 
-        CROSS JOIN `test` AS `t` 
+    SELECT * FROM `users`
+        CROSS JOIN `test` AS `t`
         ON `users`.`id` = `t`.`tid` AND `users`.`did` = `t`.`mid`
+*/
+
+echo '<br><br>---JOIN#2---<br><br>';
+echo $builder->select()
+    ->join('test2')
+    ->addOn([['fid', 'gid']])
+    ->setType('right')
+    ->get();
+
+/*
+    SELECT * FROM `users`
+        RIGHT JOIN `test2`
+        ON `users`.`fid` = `test2`.`gid`
+*/
+
+echo '<br><br>---JOIN#3---<br><br>';
+echo $builder->select()
+    ->join('test3')
+    ->using('qwerty')
+    ->get();
+
+/*
+    SELECT * FROM `users` LEFT JOIN `test3` USING(`qwerty`)
+*/
+
+echo '<br><br>---JOIN#4---<br><br>';
+echo $builder->select()
+    ->join('test4')
+    ->addOn([['rid', 'vid']])
+    ->setAlias('t4')
+    ->setType('cross')
+    ->join('test5', 't5', [['aid', 'mid'], ['bid', 'cid']], 'inner')
+    ->get();
+
+/*
+    SELECT * FROM `users` 
+        CROSS JOIN `test4` AS `t4` 
+        INNER JOIN `test5` AS `t5` 
+        ON `users`.`rid` = `test4`.`vid` 
+            AND `users`.`aid` = `test5`.`mid` 
+            AND `users`.`bid` = `test5`.`cid` 
 */
 
 echo '<br><br>---PLACEHOLDERS---<br><br>';
