@@ -4,7 +4,8 @@ namespace Compolomus\LSQLQueryBuilder\System;
 
 class Conditions
 {
-    use Traits\Placeholders, Traits\Helper;
+    use Traits\Placeholders,
+        Traits\Helper;
 
     private $conditionTypes = [
         '=',
@@ -24,10 +25,6 @@ class Conditions
     ];
 
     private $conditions = [];
-
-    public function __construct()
-    {
-    }
 
     public function conditions(): array
     {

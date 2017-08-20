@@ -31,7 +31,7 @@ trait Helper
 
     public function escapeField($field)
     {
-        return is_array($field) ? array_map([$this, 'escapeField'], $field) : '`' . $field . '`';
+        return is_array($field) ? array_map([$this, 'escapeField'], $field) : '`' . str_replace('.', '`.`', $field) . '`';
     }
 
     public function map(string $field, $value): string

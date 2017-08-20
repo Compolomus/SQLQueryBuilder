@@ -4,6 +4,7 @@ namespace Compolomus\LSQLQueryBuilder\Parts;
 
 use Compolomus\LSQLQueryBuilder\System\{
     Traits\GetParts,
+    Traits\Join as TJoin,
     Traits\Limit as TLimit,
     Traits\Where as TWhere,
     Traits\Order as TOrder,
@@ -17,11 +18,9 @@ use Compolomus\LSQLQueryBuilder\System\{
  */
 class Select
 {
-    use TLimit, TWhere, TOrder, TGroup, Caller, GetParts;
+    use TJoin, TLimit, TWhere, TOrder, TGroup, Caller, GetParts;
 
     protected $fields;
-
-    protected $join = null;
 
     public function __construct(array $fields = [], bool $count = false)
     {
@@ -33,18 +32,11 @@ class Select
         return $this->fields->result();
     }
 
-    public function join(string $table, ?array $on = null, ?string $alias = null, string $joinType = 'left'): Select
-    {
-        $this->join = new Join($table, $on, $alias, $joinType);
-        $this->join->setParentTable($this->table());
-        return $this;
-    }
-
     public function get(): string
     {
         return 'SELECT ' . $this->getFields() . ' FROM '
             . $this->table()
-            . (!is_null($this->join) ? $this->join->get() : '')
+            . (!is_null($this->join) ? $this->join->result() : '')
             . $this->getParts();
     }
 }
