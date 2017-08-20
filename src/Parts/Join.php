@@ -21,19 +21,13 @@ class Join
 
     private $joinType = null;
 
-    private $joinTypes = ['left', 'right', 'cross', 'inner']; //TODO: add types
+    private $joinTypes = ['left', 'right', 'cross', 'inner'];
 
     private $counter = 0;
 
     public function __construct(string $table, ?string $alias = null, array $onPairs = [], string $joinType = 'left')
     {
         $this->join($table, $alias, $onPairs, $joinType);
-    }
-
-    public function debug()
-    {
-        echo '<pre>' . print_r($this, true) . '</pre>';
-        return $this;
     }
 
     public function join(string $table, ?string $alias = null, array $onPairs = [], string $joinType = 'left'): Join
@@ -82,18 +76,19 @@ class Join
         return $this;
     }
 
-    private function onMap(): ?string
+    private function onMap(): string
     {
         if (!empty($this->onPairs)) {
             $result = [];
             foreach ($this->table as $counter => $join) {
-                $result[] = $this->concatWhere(array_map(function ($item) use ($join, $counter) {
+                $result[] = $this->concatWhere(array_map(function ($item) use ($join) {
                     return $this->base->table() . '.' . $this->escapeField($item[0]) . ' = ' . $this->escapeField($join) . '.' . $this->escapeField($item[1]);
                 }, $this->onPairs[$counter]));
             }
             return ' ON ' . $this->concatWhere($result);
+        } else {
+            return ' USING(' . $this->using . ')';
         }
-        return null;
     }
 
     public function result(): ?string
@@ -104,13 +99,7 @@ class Join
                 . $this->escapeField($join)
                 . (!is_null($this->alias[$counter]) ? ' AS ' . $this->escapeField($this->alias[$counter]) : '');
         }
-        $result[] = ($this->onMap()
-            ? $this->onMap()
-            : (!is_null($this->using)
-                ? ' USING(' . $this->using . ')'
-                : ''
-            )
-        );
+        $result[] = $this->onMap();
         return implode(' ', $result);
     }
 }

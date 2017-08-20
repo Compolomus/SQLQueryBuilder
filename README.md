@@ -239,6 +239,21 @@ echo $builder->select()
             AND `users`.`bid` = `test5`.`cid` 
 */
 
+echo '<br><br>---JOIN#5---<br><br>';
+echo $builder->select()
+    ->join('testus', 'ts')
+    ->setType('right')
+    ->join(testus2, 'ts2')
+    ->using('user')
+    ->get();
+
+/*
+    SELECT * FROM `users` 
+        RIGHT JOIN `testus` AS `ts` 
+        LEFT JOIN `testus2` AS `ts2` 
+    USING(`user`)
+*/
+
 echo '<br><br>---PLACEHOLDERS---<br><br>';
 
 echo '<pre>' . print_r($builder->placeholders(), 1) . '</pre>';
