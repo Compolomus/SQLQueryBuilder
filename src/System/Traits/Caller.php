@@ -17,4 +17,9 @@ trait Caller
             return $this->base->$method(...$args);
         }
     }
+
+    public function __toString()
+    {
+        return static::get();
+    }
 }

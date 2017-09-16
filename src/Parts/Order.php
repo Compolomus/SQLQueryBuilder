@@ -38,7 +38,7 @@ class Order
         $asc = $this->concatOrder($this->orders['asc'], 'asc');
         $desc = $this->concatOrder($this->orders['desc'], 'desc');
         if ($asc | $desc) {
-            $order = 'ORDER BY ' . $asc . ($asc & $desc ? ', ' : '') . $desc;
+            $order = 'ORDER BY ' . $asc . ($asc & $desc ? ',' : '') . $desc;
         }
         return $order;
     }

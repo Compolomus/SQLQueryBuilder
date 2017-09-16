@@ -24,7 +24,7 @@ trait Helper
         }
         $result = '';
         if (count($order) > 0) {
-            $result = implode(', ', $this->escapeField($order)) . ' ' . strtoupper($type);
+            $result = implode(',', $this->escapeField($order)) . ' ' . strtoupper($type);
         }
         return $result;
     }
