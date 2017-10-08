@@ -19,18 +19,24 @@ class Where
         'or'
     ];
 
-    private $counter = -1;
+    private $counter = 0;
 
     private $conditions;
 
-    public function where(string $type = 'and'): Where
+    public function where(array $where = [], string $type = 'and'): Where
     {
         if (!in_array(strtolower($type), $this->whereTypes)) {
             throw new \InvalidArgumentException('DIE |WHERE construct|');
         }
-        $this->counter++;
         $this->whereType[$this->counter] = $type;
         $this->conditions[$this->counter] = new Conditions;
+        if (count($where)) {
+            foreach ($where as $condition) {
+                list($field, $cond, $value) = $condition;
+                $this->add($field, $cond, $value);
+            }
+        }
+        $this->counter++;
         return $this;
     }
 
@@ -39,9 +45,9 @@ class Where
         return end($this->conditions);
     }
 
-    public function __construct(string $type = 'and')
+    public function __construct(array $where = [], string $type = 'and')
     {
-        $this->where($type);
+        $this->where($where, $type);
     }
 
     /**

@@ -8,9 +8,9 @@ trait Group
 {
     private $group;
 
-    public function group(?string $field = null): PGroup
+    public function group(array $fields): PGroup
     {
-        $this->group = new Pgroup($field);
+        $this->group = new Pgroup($fields);
         $this->group->base($this);
         return $this->group;
     }

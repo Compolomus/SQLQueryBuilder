@@ -13,11 +13,9 @@ class Group
 
     private $groups = [];
 
-    public function __construct(?string $field = null)
+    public function __construct(array $fields)
     {
-        if (!is_null($field)) {
-            $this->add($field);
-        }
+        array_map([$this, 'add'], $fields);
     }
 
     public function add(string $field): Group

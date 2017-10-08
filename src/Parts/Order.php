@@ -11,32 +11,49 @@ class Order
 {
     use Caller, Helper;
 
-    private $orders = [
-        'asc' => [],
-        'desc' => []
-    ];
+    private $asc = [];
 
-    public function __construct(?string $field = null, string $type = 'asc')
+    private $desc = [];
+
+    public function __construct(array $fields = [], string $type = 'asc')
     {
-        if (!is_null($field)) {
-            if (!in_array(strtolower($type), array_keys($this->orders))) {
-                throw new \InvalidArgumentException('Передан неверный тип |ORDER add|');
-            }
-            $this->add($field, $type);
+        if (!in_array(strtolower($type), ['asc', 'desc'])) {
+            throw new \InvalidArgumentException('Передан неверный тип |ORDER add|');
+        }
+        if (count($fields)) {
+            $this->map($fields, $type);
         }
     }
 
+    private function map(array $fields, string $type = 'asc'): void
+    {
+        array_map([$this, 'add'], $fields, array_fill(0, count($fields), $type));
+    }
+
+
     public function add(string $field, string $type = 'asc'): Order
     {
-        $this->orders[$type][] = $field;
+        $this->$type[] = $field;
+        return $this;
+    }
+
+    public function desc(array $desc): Order
+    {
+        $this->map($desc, 'desc');
+        return $this;
+    }
+
+    public function asc(array $asc): Order
+    {
+        $this->map($asc, 'asc');
         return $this;
     }
 
     public function result(): string
     {
         $order = '';
-        $asc = $this->concatOrder($this->orders['asc'], 'asc');
-        $desc = $this->concatOrder($this->orders['desc'], 'desc');
+        $asc = $this->concatOrder($this->asc, 'asc');
+        $desc = $this->concatOrder($this->desc, 'desc');
         if ($asc | $desc) {
             $order = 'ORDER BY ' . $asc . ($asc & $desc ? ',' : '') . $desc;
         }
