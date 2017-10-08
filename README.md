@@ -24,18 +24,11 @@ $builder = new Builder('users');
 echo '---SELECT---<br><br>';
 
 echo $builder->select(['user_id' => 'id', 'name', 'email'])
-    ->where()
-        ->add('id', '=', 15)
-        ->add('firm_id', 'not in', [1, 2, 3])
-    ->where('or')
-        ->add('age', '>', 17)
-        ->add('friends', '>=', 177)
-    ->group('age')
-        ->add('friends')
-    ->order('age', 'desc')
-        ->add('salary')
-        ->add('experience')
-        ->add('size', 'desc')
+    ->where([['id', '=', 15], ['firm_id', 'not in', [1, 2, 3]]])
+    ->where([['age', '>', 17], ['friends', '>=', 177]], 'or')
+    ->group(['age', 'friends'])
+    ->order(['salary', 'experience'], 'desc')
+        ->asc(['age', 'size'])
     ->limit(5, 10, 'page');
 
 /*
@@ -53,8 +46,8 @@ echo '<br><br>---COUNT#1---<br><br>';
 echo $builder->count()
     ->where()
         ->add('age', '=', 32)
-    ->group('position')
-    ->order('name', 'desc')
+    ->group(['position'])
+    ->order(['name'], 'desc')
     ->limit(10, 20);
 
 /*
@@ -155,10 +148,10 @@ echo '<br><br>---UPDATE#2---<br><br>';
 echo $builder->update()
     ->fields(['name', 'subname'])
     ->values(['test', 'testus'])
-    ->where('or')
+    ->where([], 'or')
         ->add('growth', '<', 180)
         ->add('growth', '>', 140)
-    ->order('name', 'desc')
+    ->order(['name'], 'desc')
     ->limit(10, 20, 'offset');
 
 /*

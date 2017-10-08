@@ -8,9 +8,9 @@ trait Where
 {
     private $where;
 
-    public function where(string $type = 'and'): Pwhere
+    public function where(array $where = [], string $type = 'and'): Pwhere
     {
-        $this->where = new Pwhere($type);
+        $this->where = new Pwhere($where, $type);
         $this->where->base($this);
         return $this->where;
     }

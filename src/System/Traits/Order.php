@@ -8,9 +8,9 @@ trait Order
 {
     private $order;
 
-    public function order(?string $field = null, string $type = 'asc'): Porder
+    public function order(array $fields = [], string $type = 'asc'): Porder
     {
-        $this->order = new Porder($field, $type);
+        $this->order = new Porder($fields, $type);
         $this->order->base($this);
         return $this->order;
     }
