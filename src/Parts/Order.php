@@ -25,7 +25,7 @@ class Order
         }
     }
 
-    private function map(array $fields, string $type = 'asc')
+    private function map(array $fields, string $type = 'asc'): void
     {
         array_map([$this, 'add'], $fields, array_fill(0, count($fields), $type));
     }
