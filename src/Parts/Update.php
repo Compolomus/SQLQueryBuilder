@@ -22,17 +22,11 @@ class Update extends Insert
 
     public function set(array $values): string
     {
-        $result = [];
-        foreach ($values as $value) {
-            $key = $this->uid('u');
-            $result[] = ':' . $key;
-            $this->placeholders()->set($key, $value);
-        }
         return implode(',',
-            array_map(function($field, $value) {
+            array_map(function ($field, $value) {
                 return $field . ' = ' . $value;
-            }
-                , $this->escapeField($this->fields), $result));
+            },
+                $this->escapeField($this->fields), $this->preSet($values, 'u')));
     }
 
     /**

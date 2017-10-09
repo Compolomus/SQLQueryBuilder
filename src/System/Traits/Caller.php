@@ -2,6 +2,10 @@
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
+/**
+ * @method string table()
+ * @method void addPlaceholders($placeholders)
+ */
 trait Caller
 {
     private $base;

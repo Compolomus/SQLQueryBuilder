@@ -228,9 +228,9 @@ echo '<br><br>---JOIN#4---<br><br>';
 
 echo $builder->select()
     ->join('test4')
-    ->addOn([['rid', 'vid']])
-    ->setAlias('t4')
-    ->setType('cross')
+        ->addOn([['rid', 'vid']])
+        ->setAlias('t4')
+        ->setType('cross')
     ->join('test5', 't5', [['aid', 'mid'], ['bid', 'cid']], 'inner');
     
 /*
@@ -245,9 +245,9 @@ echo $builder->select()
 echo '<br><br>---JOIN#5---<br><br>';
 echo $builder->select()
     ->join('testus', 'ts')
-    ->setType('right')
+        ->setType('right')
     ->join('testus2', 'ts2')
-    ->using('user');
+        ->using('user');
 
 /*
     SELECT * FROM `users`

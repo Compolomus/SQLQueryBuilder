@@ -42,15 +42,20 @@ class Insert
         return $this;
     }
 
-    protected function set(array $values): string
+    protected function preSet(array $values, string $flag): array
     {
         $result = [];
         foreach ($values as $value) {
-            $key = $this->uid('i');
+            $key = $this->uid($flag);
             $result[] = ':' . $key;
             $this->placeholders()->set($key, $value);
         }
-        return '(' . implode(',', $result) . ')';
+        return $result;
+    }
+
+    protected function set(array $values): string
+    {
+        return '(' . implode(',', $this->preSet($values, 'i')) . ')';
     }
 
     public function get(): string

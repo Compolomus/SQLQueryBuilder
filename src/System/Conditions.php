@@ -26,6 +26,8 @@ class Conditions
 
     private $conditions = [];
 
+    public function __construct(){}
+
     public function conditions(): array
     {
         return $this->conditions;
