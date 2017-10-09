@@ -4,13 +4,12 @@ namespace Compolomus\LSQLQueryBuilder\Parts;
 
 use Compolomus\LSQLQueryBuilder\System\Traits\{
     Helper,
-    Caller,
-    Placeholders
+    Caller
 };
 
 class Limit
 {
-    use Caller, Placeholders, Helper;
+    use Caller, Helper;
 
     private $limit;
 
@@ -18,9 +17,6 @@ class Limit
 
     public function __construct(int $limit, int $offset = 0, string $type = 'limit')
     {
-        if ($limit <= 0) {
-            throw new \InvalidArgumentException('Отрицательный или нулевой аргумент |LIMIT construct|');
-        }
         $this->limit = $limit;
         $this->offset = $offset;
 
@@ -40,14 +36,9 @@ class Limit
         $this->list();
     }
 
-    public function tPage(): ?\Exception
+    public function tPage(): void
     {
-        if ($this->offset <= 0) {
-            throw new \InvalidArgumentException('Отрицательный или нулевой аргумент |PAGE construct|');
-        } else {
-            $this->offset = ($this->offset - 1) * $this->limit;
-            return null;
-        }
+        $this->offset = ($this->offset - 1) * $this->limit;
     }
 
     private function list(): array
@@ -55,19 +46,8 @@ class Limit
         return list($this->limit, $this->offset) = [$this->offset, $this->limit];
     }
 
-    public function setPlaceholders(): array
-    {
-        $offset = $this->uid('l');
-        $this->placeholders()->set($offset, $this->offset);
-        $limit = $this->uid('l');
-        $this->placeholders()->set($limit, $this->limit);
-        return ['offset' => ':' . $offset, 'limit' => ':' . $limit];
-    }
-
     public function result(): string
     {
-        $placeholders = $this->setPlaceholders();
-        $this->addPlaceholders($this->placeholders()->get());
-        return $this->limit ? 'LIMIT ' . $placeholders['offset'] . ' OFFSET ' . $placeholders['limit'] : '';
+        return 'LIMIT ' . $this->offset . ' OFFSET ' . $this->limit;
     }
 }

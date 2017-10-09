@@ -13,7 +13,7 @@ class Placeholders
 
     public function set(string $key, $value)
     {
-        $this->placeholders[$key] = $value;
+        $this->placeholders[':' . $key] = $value;
     }
 
     public function get(): array

@@ -8,7 +8,7 @@ trait GetParts
     {
         $result = '';
         foreach ($fields as $value) {
-            $result .= (is_object($this->$value) ? ' ' . $this->$value->result() : '');
+            $result .= (property_exists($this, $value) && is_object($this->$value) ? ' ' . $this->$value->result() : '');
         }
         return $result;
     }

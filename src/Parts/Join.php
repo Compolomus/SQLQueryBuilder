@@ -85,9 +85,9 @@ class Join
                     return $this->base->table() . '.' . $this->escapeField($item[0]) . ' = ' . $this->escapeField($join) . '.' . $this->escapeField($item[1]);
                 }, $this->onPairs[$counter]));
             }
-            return ' ON ' . $this->concatWhere($result);
+            return 'ON ' . $this->concatWhere($result);
         } else {
-            return ' USING(' . $this->using . ')';
+            return 'USING(' . $this->using . ')';
         }
     }
 

@@ -5,7 +5,6 @@ namespace Compolomus\LSQLQueryBuilder\Parts;
 use Compolomus\LSQLQueryBuilder\System\Traits\{
     Helper,
     Caller,
-    SValues,
     Placeholders
 };
 
@@ -23,7 +22,7 @@ class Insert
     public function __construct(array $args = [])
     {
         if (count($args) > 0) {
-            if (preg_match('/[a-z]+/i', key($args))) {
+            if (is_string(key($args))) {
                 $this->fields(array_keys($args));
             }
             $this->values(array_values($args));
@@ -61,7 +60,7 @@ class Insert
             . ' VALUES '
             . (count($this->values)
                 ? implode(',', $this->values)
-                : (count($this->fields) & !count($this->values)
+                : (count($this->fields) && !count($this->values)
                     ? '(' . implode(',', array_fill(0, count($this->fields), '?')) . ')'
                     : '')
             );

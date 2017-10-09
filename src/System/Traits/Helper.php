@@ -29,9 +29,13 @@ trait Helper
         return $result;
     }
 
+    /**
+     * @param $field
+     * @return array|string
+     */
     public function escapeField($field)
     {
-        return is_array($field) ? array_map([$this, 'escapeField'], $field) : '`' . str_replace('.', '`.`', $field) . '`';
+        return is_array($field) ? array_map([$this, 'escapeField'], $field) : str_replace('`*`', '*', '`' . str_replace('.', '`.`', $field) . '`');
     }
 
     public function map(string $field, $value): string
@@ -41,7 +45,8 @@ trait Helper
 
     public function uid(string $prefix): string
     {
-        $str = uniqid(strtoupper($prefix) . '-', true);
-        return str_replace('.', '', substr($str, 0, 2) . substr($str, 12, -4));
+        $prefix = strtoupper($prefix);
+        $str = uniqid($prefix . '-', true);
+        return str_replace('.', '', substr($str, 2, 2) . substr($str, 12, -4)) . $prefix;
     }
 }
