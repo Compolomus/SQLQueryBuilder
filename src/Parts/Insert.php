@@ -10,6 +10,7 @@ use Compolomus\LSQLQueryBuilder\System\Traits\{
 
 /**
  * @method string table()
+ * @method void addPlaceholders($placeholders)
  */
 class Insert
 {

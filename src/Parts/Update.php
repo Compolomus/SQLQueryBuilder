@@ -14,6 +14,7 @@ use Compolomus\LSQLQueryBuilder\System\Traits\{
 
 /**
  * @method string table()
+ * @method void addPlaceholders($placeholders)
  */
 class Update extends Insert
 {
@@ -34,6 +35,9 @@ class Update extends Insert
                 , $this->escapeField($this->fields), $result));
     }
 
+    /**
+     * @return string
+     */
     public function get(): string
     {
         $this->addPlaceholders($this->placeholders()->get());

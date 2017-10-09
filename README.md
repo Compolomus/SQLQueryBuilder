@@ -32,17 +32,18 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
     ->limit(5, 10, 'page');
 
 /*
-    SELECT `user_id` AS `id`,`name`,`email`
-        FROM `users`
-        WHERE (`id` = :W-6fa17117 AND `firm_id` NOT IN :W-6fa26444)
-            AND (`age` > :W-6fa12048 OR `friends` >= :W-6fa74078)
-        GROUP BY `age`,`friends`
-        ORDER BY `salary`,`experience` ASC,
-            `age`,`size` DESC
-        LIMIT :L-ae294743 OFFSET :L-ae248761
+    SELECT `user_id` AS `id`,`name`,`email` 
+        FROM `users` 
+        WHERE (`id` = :59ee533076W AND `firm_id` NOT IN :59ee571790W) 
+            AND (`age` > :592cd57379W OR `friends` >= :592cd61484W) 
+        GROUP BY `age`,`friends` 
+        ORDER BY `age`,`size` ASC,
+                    `salary`,`experience` DESC 
+        LIMIT 45 OFFSET 5
 */
 
 echo '<br><br>---COUNT#1---<br><br>';
+
 echo $builder->count()
     ->where()
         ->add('age', '=', 32)
@@ -51,14 +52,16 @@ echo $builder->count()
     ->limit(10, 20);
 
 /*
-    SELECT COUNT(*) FROM `users`
-        WHERE (`age` = :W-19260558)
-        GROUP BY `position`
-        ORDER BY `name` DESC
-        LIMIT :L-19260533 OFFSET :L-19217522
+    SELECT COUNT(*) 
+        FROM `users` 
+        WHERE (`age` = :598bf03980W) 
+        GROUP BY `position` 
+        ORDER BY `name` DESC 
+        LIMIT 20 OFFSET 10
 */
 
 echo '<br><br>---COUNT#2---<br><br>';
+
 echo $builder->count('*', 'count');
 
 /*
@@ -71,8 +74,8 @@ echo '<br><br>---DELETE BY ID---<br><br>';
 echo $builder->delete(5);
 
 /*
-    DELETE FROM `users`
-        WHERE (`id` = :w6{uniqid})
+    DELETE FROM `users` 
+        WHERE (`id` = :593b785726W)
 */
 
 echo '<br><br>---DELETE BY FIELD---<br><br>';
@@ -80,8 +83,8 @@ echo '<br><br>---DELETE BY FIELD---<br><br>';
 echo $builder->delete(15, 'userid');
 
 /*
-    DELETE FROM `users`
-        WHERE (`userid` = :w6{uniqid})
+    DELETE FROM `users` 
+        WHERE (`userid` = :593b756573W)
 */
 
 echo '<br><br>---DELETE WITH WHERE---<br><br>';
@@ -91,8 +94,8 @@ echo $builder->delete()
         ->add('rank', 'between', [12, 15]);
 
 /*
-    DELETE FROM `users`
-        WHERE (`rank` BETWEEN :w7{uniqid})
+    DELETE FROM `users` 
+        WHERE (`rank` BETWEEN :5979f19816W)
 */
 
 echo '<br><br>---INSERT FIELDS AND VALUES---<br><br>';
@@ -103,9 +106,11 @@ echo $builder->insert()
     ->values(['Petya', 'petya@gmail.com', 24]);
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`)
-                VALUES (:i8{uniqid},:i9{uniqid},:i10{uniqid}),
-                    (:i11{uniqid},:i12{uniqid},:i13{uniqid})
+    INSERT INTO `users` 
+        (`name`,`email`,`age`) 
+        VALUES 
+            (:59b8773308I,:59b8798017I,:59b8791062I),
+            (:59b8754434I,:59b8727155I,:59b8728332I)
 */
 
 echo '<br><br>---INSERT ARRAY(FIELDS => VALUES)---<br><br>';
@@ -117,7 +122,10 @@ echo $builder->insert([
 ]);
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`) VALUES (:i14{uniqid},:i15{uniqid},:i16{uniqid})
+    INSERT INTO `users` 
+        (`name`,`email`,`age`) 
+        VALUES 
+            (:59b8702032I,:59b8702274I,:59b8735242I)
 */
 
 echo '<br><br>---INSERT PREPARE WITH FIELDS---<br><br>';
@@ -126,7 +134,9 @@ echo $builder->insert()
     ->fields(['name', 'email', 'age']);
 
 /*
-    INSERT INTO `users` (`name`,`email`,`age`) VALUES (?,?,?)
+    INSERT INTO `users` 
+        (`name`,`email`,`age`) 
+        VALUES (?,?,?)
 */
 
 echo '<br><br>---UPDATE#1---<br><br>';
@@ -140,11 +150,16 @@ echo $builder->update([
         ->add('test', 'regexp', '^.....$');
 
 /*
-    UPDATE `users` SET `user` = :u17{uniqid},`post` = :u18{uniqid},`text` = :u19{uniqid}
-        WHERE (`test` REGEXP :w20{uniqid})
+    UPDATE `users` 
+        SET 
+            `user` = :5923849640U,
+            `post` = :5923828461U,
+            `text` = :5923846245U 
+        WHERE (`test` REGEXP :5923827411W)
 */
 
 echo '<br><br>---UPDATE#2---<br><br>';
+
 echo $builder->update()
     ->fields(['name', 'subname'])
     ->values(['test', 'testus'])
@@ -155,13 +170,17 @@ echo $builder->update()
     ->limit(10, 20, 'offset');
 
 /*
-    UPDATE `users` SET `name` = :u21{uniqid},`subname` = :u22{uniqid}
-        WHERE (`growth` < :w23{uniqid} OR `growth` > :w24{uniqid})
-        ORDER BY `name` DESC
+    UPDATE `users` 
+        SET 
+            `name` = :5923864911U,
+            `subname` = :5923845311U 
+        WHERE (`growth` < :5923863542W OR `growth` > :5923879798W) 
+        ORDER BY `name` DESC 
         LIMIT 10 OFFSET 20
 */
 
 echo '<br><br>---UPDATE#3---<br><br>';
+
 echo $builder->update()
     ->fields(['name', 'email', 'age']);
 
@@ -170,16 +189,20 @@ echo $builder->update()
 */
 
 echo '<br><br>---JOIN#1---<br><br>';
+
 echo $builder->select()
     ->join('test', 't', [['id', 'tid'], ['did', 'mid']], 'cross');
 
 /*
-    SELECT * FROM `users`
-        CROSS JOIN `test` AS `t`
-        ON `users`.`id` = `t`.`tid` AND `users`.`did` = `t`.`mid`
+    SELECT * FROM `users` 
+        CROSS JOIN `test` AS `t` 
+            ON 
+                `users`.`id` = `test`.`tid` 
+            AND `users`.`did` = `test`.`mid`
 */
 
 echo '<br><br>---JOIN#2---<br><br>';
+
 echo $builder->select()
     ->join('test2')
     ->addOn([['fid', 'gid']])
@@ -192,6 +215,7 @@ echo $builder->select()
 */
 
 echo '<br><br>---JOIN#3---<br><br>';
+
 echo $builder->select()
     ->join('test3')
     ->using('qwerty');
@@ -201,12 +225,22 @@ echo $builder->select()
 */
 
 echo '<br><br>---JOIN#4---<br><br>';
+
 echo $builder->select()
     ->join('test4')
     ->addOn([['rid', 'vid']])
     ->setAlias('t4')
     ->setType('cross')
     ->join('test5', 't5', [['aid', 'mid'], ['bid', 'cid']], 'inner');
+    
+/*
+    SELECT * FROM `users` 
+        CROSS JOIN `test4` AS `t4` 
+        INNER JOIN `test5` AS `t5` 
+            ON `users`.`rid` = `test4`.`vid` 
+            AND `users`.`aid` = `test5`.`mid` 
+            AND `users`.`bid` = `test5`.`cid`
+*/    
 
 echo '<br><br>---JOIN#5---<br><br>';
 echo $builder->select()
@@ -229,37 +263,31 @@ echo '<pre>' . print_r($builder->placeholders(), true) . '</pre>';
 /*
 Array
 (
-    [W-8b237313] => 15
-    [W-8b277941] => (1,2,3)
-    [W-8b208993] => 17
-    [W-8b230349] => 177
-    [L-08245666] => 45
-    [L-08243748] => 5
-    [W-46a97418] => 32
-    [L-46a45037] => 20
-    [L-46a18403] => 10
-    [W-85264315] => 5
-    [W-85259851] => 15
-    [W-85201400] => 12 AND 15
-    [I-c3b29595] => Vasya
-    [I-c3b22112] => vasya@gmail.com
-    [I-c3b95433] => 22
-    [I-c3b42677] => Petya
-    [I-c3b54646] => petya@gmail.com
-    [I-c3b24548] => 24
-    [I-c3b53493] => Oleg
-    [I-c3b63813] => oleg@gmail.com
-    [I-c3b64637] => 33
-    [U-c3b20186] => 11
-    [U-c3b90942] => 345
-    [U-c3b81871] => Text
-    [W-02371938] => ^.....$
-    [U-02332943] => test
-    [U-02368365] => testus
-    [W-02317242] => 180
-    [W-02345100] => 140
-    [L-02373834] => 10
-    [L-02363296] => 20
+    [:59ee533076W] => 15
+    [:59ee571790W] => (1,2,3)
+    [:592cd57379W] => 17
+    [:592cd61484W] => 177
+    [:598bf03980W] => 32
+    [:593b785726W] => 5
+    [:593b756573W] => 15
+    [:5979f19816W] => 12 AND 15
+    [:59b8773308I] => Vasya
+    [:59b8798017I] => vasya@gmail.com
+    [:59b8791062I] => 22
+    [:59b8754434I] => Petya
+    [:59b8727155I] => petya@gmail.com
+    [:59b8728332I] => 24
+    [:59b8702032I] => Oleg
+    [:59b8702274I] => oleg@gmail.com
+    [:59b8735242I] => 33
+    [:5923849640U] => 11
+    [:5923828461U] => 345
+    [:5923846245U] => Text
+    [:5923827411W] => ^.....$
+    [:5923864911U] => test
+    [:5923845311U] => testus
+    [:5923863542W] => 180
+    [:5923879798W] => 140
 )
 */
 
