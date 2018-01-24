@@ -26,7 +26,7 @@ class Where
     public function where(array $where = [], string $type = 'and'): Where
     {
         if (!in_array(strtolower($type), $this->whereTypes)) {
-            throw new \InvalidArgumentException('DIE |WHERE construct|');
+            throw new \InvalidArgumentException('Передан неверный тип ' . $type . '  |WHERE construct|');
         }
         $this->whereType[$this->counter] = $type;
         $this->conditions[$this->counter] = new Conditions;

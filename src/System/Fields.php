@@ -6,37 +6,129 @@ class Fields
 {
     use Traits\Helper;
 
-    private $fields = [];
+    private $name;
 
-    public function __construct(array $fields, bool $count = false)
+    private $allias = null;
+
+    private $result = null;
+
+    private $functionsList = [
+        'COMPRESS',
+        'MD5',
+        'PASSWORD',
+        'SHA',
+        'SHA1',
+        'UNCOMPRESS',
+        'UNCOMPRESSED_LENGTH',
+        'VALIDATE_PASSWORD_STRENGTH',
+
+        'AVG',
+        'BIT_AND',
+        'BIT_OR',
+        'BIT_XOR',
+        'BIT_COUNT',
+        'COUNT',
+        'GROUP_CONCAT',
+        'JSON_ARRAYAGG',
+        'MAX',
+        'MIN',
+        'STD',
+        'STDDEV',
+        'STDDEV_POP',
+        'STDDEV_SAMP',
+        'SUM',
+        'VAR_POP',
+        'VAR_SAMP',
+        'VARIANCE',
+
+        'ASCII',
+        'BIN',
+        'ORD',
+        'CHAR_LENGTH', // multibyte len
+        'HEX',
+        'OCT',
+        'LCASE',
+        'LOWER',
+        'UCASE',
+        'UPPER',
+        'REVERSE',
+        #'LOAD_FILE', // security
+        'TRIM', // rtrim
+        'LTRIM',
+        'RTRIM',
+
+        'ABS',
+        'ACOS',
+        'ASIN',
+        'ATAN',
+        'CEIL',
+        'CEILING',
+        'COS',
+        'COT',
+        'CRC32',
+        'DEGREES',
+        'EXP',
+        'FLOOR',
+        'LN',
+        'LOG',
+        'LOG2',
+        'LOG10',
+        'RADIANS',
+        'ROUND',
+        'SIGN',
+        'SIN',
+        'SQRT',
+        'TAN',
+
+        'DATE',
+        'DAY',
+        'DAYNAME',
+        'DAYOFMONTH',
+        'DAYOFWEEK',
+        'DAYOFYEAR',
+        'FROM_DAYS',
+        'FROM_UNIXTIME',
+        'HOUR',
+        'LAST_DAY',
+        'MICROSECOND',
+        'MINUTE',
+        'MONTH',
+        'MONTHNAME',
+        'QUARTER',
+        'SECOND',
+        'SEC_TO_TIME',
+        'TIME',
+        'TIME_TO_SEC',
+        'TO_DAYS',
+        'TO_SECONDS',
+        'UNIX_TIMESTAMP',
+        'WEEK',
+        'WEEKDAY',
+        'YEAR',
+        'YEARWEEK',
+        'WEEKOFYEAR',
+    ];
+
+    public function __construct(string $name)
     {
-        $count ? $this->count(key($fields), end($fields)) : $this->setFields($fields);
+        $this->result = $this->name = $this->escapeField($name);
     }
 
-    public function setFields($fields)
+    public function allias(string $alliasName): void
     {
-        $return = [];
-        if (count($fields)) {
-            foreach ($fields as $alias => $field) {
-                $return[] = is_int($alias) ? $this->escapeField($field) : $this->escapeField($alias) . ' AS ' . $this->escapeField($field);
-            }
-        } else {
-            $return[] = '*';
-        }
-
-        $this->fields = $return;
+        $this->allias = $this->escapeField($alliasName);
     }
 
-    public function count(string $field = '*', ?string $alias = null): void
+    public function function(string $functionName): void
     {
-        if ($field != '*') {
-            $field = $this->escapeField($field);
+        if (!in_array(strtoupper($functionName), $this->functionsList)) {
+            throw new \InvalidArgumentException('MYSQL Функция ' . $functionName . ' не найдена |SELECT setFunction|');
         }
-        $this->fields[] = 'COUNT(' . $field . ')' . (!is_null($alias) ? ' AS ' . $this->escapeField($alias) : '');
+        $this->result = strtoupper($functionName) . '(' . $this->name . ')';
     }
 
     public function result(): string
     {
-        return $this->concatFields($this->fields);
+        return $this->result . (!is_null($this->allias) ? ' AS ' . $this->allias : '');
     }
 }

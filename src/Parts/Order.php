@@ -18,7 +18,7 @@ class Order
     public function __construct(array $fields = [], string $type = 'asc')
     {
         if (!in_array(strtolower($type), ['asc', 'desc'])) {
-            throw new \InvalidArgumentException('Передан неверный тип |ORDER add|');
+            throw new \InvalidArgumentException('Передан неверный тип ' . $type . ' |ORDER add|');
         }
         if (count($fields)) {
             $this->map($fields, $type);

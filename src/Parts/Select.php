@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
 use Compolomus\LSQLQueryBuilder\System\{
+    Traits\Helper,
     Traits\GetParts,
     Traits\Join as TJoin,
     Traits\Limit as TLimit,
@@ -18,18 +19,47 @@ use Compolomus\LSQLQueryBuilder\System\{
  */
 class Select
 {
-    use TJoin, TLimit, TWhere, TOrder, TGroup, Caller, GetParts;
+    use TJoin, TLimit, TWhere, TOrder, TGroup, Caller, GetParts, Helper;
 
-    protected $fields;
+    private $fields = [];
 
-    public function __construct(array $fields = [], bool $count = false)
+    public function __construct(array $fields = ['*'])
     {
-        $this->fields = new Fields($fields, $count);
+        foreach ($fields as $allias => $column) {
+            preg_match("#(?<fieldName>.*)\|(?<function>.*)#", $column, $matches);
+            if (count($matches)) {
+                $field = $matches['fieldName'];
+                $object = $this->fields[$field] = new Fields($field);
+                $object->function($matches['function']);
+            } else {
+                $object = $this->fields[$column] = new Fields($column);
+            }
+            if (!is_int($allias)) {
+                $object->allias($allias);
+            }
+        }
+    }
+
+    public function setFunction(string $fieldName, string $function): Select
+    {
+        if (!in_array($fieldName, array_keys($this->fields))) {
+            throw new \InvalidArgumentException('Не найдено поле ' . $fieldName . ' |SELECT setFunction|');
+        }
+        $this->fields[$fieldName]->function($function);
+        return $this;
+    }
+
+    public function setAllias(string $fieldName, string $allias): Select
+    {
+        $this->fields[$fieldName]->allias($allias);
+        return $this;
     }
 
     public function getFields(): string
     {
-        return $this->fields->result();
+        return $this->concat(array_map(function($field) {
+            return $field->result();
+        }, $this->fields));
     }
 
     public function get(): string

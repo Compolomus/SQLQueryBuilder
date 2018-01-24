@@ -12,7 +12,7 @@ trait Helper
         return implode(' ' . strtoupper($separator) . ' ', $conditions);
     }
 
-    public function concatFields(array $fields): string
+    public function concat(array $fields): string
     {
         return implode(',', $fields);
     }

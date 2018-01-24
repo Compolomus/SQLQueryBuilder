@@ -23,7 +23,7 @@ $builder = new Builder('users');
 
 echo '---SELECT---<br><br>';
 
-echo $builder->select(['user_id' => 'id', 'name', 'email'])
+echo $builder->select(['id' => 'user_id', 'name', 'email'])
     ->where([['id', '=', 15], ['firm_id', 'not in', [1, 2, 3]]])
     ->where([['age', '>', 17], ['friends', '>=', 177]], 'or')
     ->group(['age', 'friends'])
@@ -42,9 +42,14 @@ echo $builder->select(['user_id' => 'id', 'name', 'email'])
         LIMIT 45 OFFSET 5
 */
 
+/*
+    Support 89 MYSQL Field function[one argument] (count, min, max... etc)
+*/
+
 echo '<br><br>---COUNT#1---<br><br>';
 
-echo $builder->count()
+echo $builder->select()
+    ->setFunction('*', 'count')
     ->where()
         ->add('age', '=', 32)
     ->group(['position'])
@@ -62,7 +67,7 @@ echo $builder->count()
 
 echo '<br><br>---COUNT#2---<br><br>';
 
-echo $builder->count('*', 'count');
+echo $builder->select(['count' => '*|count']);
 
 /*
     SELECT COUNT(*) AS `count`
