@@ -25,6 +25,11 @@ class Select
 
     public function __construct(array $fields = ['*'])
     {
+        $this->setFields($fields);
+    }
+
+    private function setFields(array $fields): void
+    {
         foreach ($fields as $allias => $column) {
             preg_match("#(?<fieldName>.*)\|(?<function>.*)#", $column, $matches);
             if (count($matches)) {
