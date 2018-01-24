@@ -114,12 +114,12 @@ class Fields
         $this->result = $this->name = $this->escapeField($name);
     }
 
-    public function allias(string $alliasName): void
+    public function setAllias(string $alliasName): void
     {
         $this->allias = $this->escapeField($alliasName);
     }
 
-    public function function(string $functionName): void
+    public function setFunction(string $functionName): void
     {
         if (!in_array(strtoupper($functionName), $this->functionsList)) {
             throw new \InvalidArgumentException('MYSQL Функция ' . $functionName . ' не найдена |SELECT setFunction|');

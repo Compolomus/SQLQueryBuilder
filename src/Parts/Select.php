@@ -30,12 +30,12 @@ class Select
             if (count($matches)) {
                 $field = $matches['fieldName'];
                 $object = $this->fields[$field] = new Fields($field);
-                $object->function($matches['function']);
+                $object->setFunction($matches['function']);
             } else {
                 $object = $this->fields[$column] = new Fields($column);
             }
             if (!is_int($allias)) {
-                $object->allias($allias);
+                $object->setAllias($allias);
             }
         }
     }
@@ -45,13 +45,13 @@ class Select
         if (!in_array($fieldName, array_keys($this->fields))) {
             throw new \InvalidArgumentException('Не найдено поле ' . $fieldName . ' |SELECT setFunction|');
         }
-        $this->fields[$fieldName]->function($function);
+        $this->fields[$fieldName]->setFunction($function);
         return $this;
     }
 
     public function setAllias(string $fieldName, string $allias): Select
     {
-        $this->fields[$fieldName]->allias($allias);
+        $this->fields[$fieldName]->setAllias($allias);
         return $this;
     }
 
