@@ -57,7 +57,7 @@ class Select
 
     public function getFields(): string
     {
-        return $this->concat(array_map(function($field) {
+        return $this->concat(array_map(function(Fields $field): string {
             return $field->result();
         }, $this->fields));
     }
