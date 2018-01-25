@@ -55,20 +55,18 @@ class Insert
 
     protected function set(array $values): string
     {
-        return '(' . implode(',', $this->preSet($values, 'i')) . ')';
+        return '(' . $this->concat($this->preSet($values, 'i')) . ')';
     }
 
-    public function get(): string
+    protected function get(): string
     {
         $this->addPlaceholders($this->placeholders()->get());
         return 'INSERT INTO ' . $this->table() . ' '
-            . (count($this->fields) ? '(' . implode(',', $this->escapeField($this->fields)) . ')' : '')
+            . '(' . $this->concat($this->escapeField($this->fields)) . ')'
             . ' VALUES '
             . (count($this->values)
-                ? implode(',', $this->values)
-                : (count($this->fields) && !count($this->values)
-                    ? '(' . implode(',', array_fill(0, count($this->fields), '?')) . ')'
-                    : '')
+                ? $this->concat($this->values)
+                : '(' . $this->concat(array_fill(0, count($this->fields), '?')) . ')'
             );
     }
 }

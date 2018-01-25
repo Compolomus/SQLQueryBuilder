@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
 use Compolomus\LSQLQueryBuilder\System\{
+    Traits\Helper,
     Traits\GetParts,
     Traits\Join as TJoin,
     Traits\Limit as TLimit,
@@ -18,18 +19,48 @@ use Compolomus\LSQLQueryBuilder\System\{
  */
 class Select
 {
-    use TJoin, TLimit, TWhere, TOrder, TGroup, Caller, GetParts;
+    use TJoin, TLimit, TWhere, TOrder, TGroup, Caller, GetParts, Helper;
 
-    protected $fields;
+    private $fields = [];
 
-    public function __construct(array $fields = [], bool $count = false)
+    public function __construct(array $fields = ['*'])
     {
-        $this->fields = new Fields($fields, $count);
+        array_map([$this, 'setField'], array_keys($fields), array_values($fields));
+    }
+
+    private function setField($allias, $value): void
+    {
+        preg_match("#(?<fieldName>\w{2,}|\*)(\|(?<function>\w{2,}))?#is", $value, $matches);
+        $field = $matches['fieldName'];
+        $object = $this->fields[$field] = new Fields($field);
+        if (isset($matches['function'])) {
+            $object->setFunction($matches['function']);
+        }
+        if (!is_int($allias)) {
+            $object->setAllias($allias);
+        }
+    }
+
+    public function setFunction(string $fieldName, string $function): Select
+    {
+        if (!in_array($fieldName, array_keys($this->fields))) {
+            throw new \InvalidArgumentException('Не найдено поле ' . $fieldName . ' |SELECT setFunction|');
+        }
+        $this->fields[$fieldName]->setFunction($function);
+        return $this;
+    }
+
+    public function setAllias(string $fieldName, string $allias): Select
+    {
+        $this->fields[$fieldName]->setAllias($allias);
+        return $this;
     }
 
     public function getFields(): string
     {
-        return $this->fields->result();
+        return $this->concat(array_map(function(Fields $field): string {
+            return $field->result();
+        }, $this->fields));
     }
 
     public function get(): string

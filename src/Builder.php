@@ -7,8 +7,7 @@ use Compolomus\LSQLQueryBuilder\{
     Parts\Insert,
     Parts\Select,
     Parts\Update,
-    Parts\Delete,
-    Parts\Count
+    Parts\Delete
 };
 
 /**
@@ -16,7 +15,6 @@ use Compolomus\LSQLQueryBuilder\{
  * @method Select select(array $fields = [])
  * @method Update update(array $args = [])
  * @method Delete delete(integer $id = 0, string $field = 'id')
- * @method Count count(string $field = '*', ?string $alias = null)
  */
 class Builder
 {

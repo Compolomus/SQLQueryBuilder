@@ -36,7 +36,7 @@ class Conditions
     public function add(string $field, string $condition, $value): void
     {
         if (!in_array(strtolower($condition), $this->conditionTypes)) {
-            throw new \InvalidArgumentException('Передан неверный тип |CONDITIONS add|');
+            throw new \InvalidArgumentException('Передан неверный тип ' . $condition . ' |CONDITIONS add|');
         }
         $key = $this->uid('w');
         $value = $this->type($condition, $value);
@@ -47,7 +47,7 @@ class Conditions
     public function type(string $condition, $value)
     {
         return in_array($condition, ['in', 'not in'])
-            ? '(' . implode(',', $value) . ')'
+            ? '(' . $this->concat($value) . ')'
             : (
             in_array($condition, ['between', 'not between'])
                 ? implode(' AND ', $value)

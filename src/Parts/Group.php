@@ -28,7 +28,7 @@ class Group
     {
         $group = '';
         if (count($this->groups)) {
-            $group = 'GROUP BY ' . implode(',', $this->groups);
+            $group = 'GROUP BY ' . $this->concat($this->groups);
         }
         return $group;
     }

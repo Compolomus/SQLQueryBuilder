@@ -20,13 +20,21 @@ class Update extends Insert
 {
     use Caller, TLimit, TWhere, TOrder, GetParts, Placeholders, Helper;
 
+    protected $values = null;
+
     public function set(array $values): string
     {
-        return implode(',',
+        return $this->concat(
             array_map(function ($field, $value) {
                 return $field . ' = ' . $value;
             },
                 $this->escapeField($this->fields), $this->preSet($values, 'u')));
+    }
+
+    public function values(array $values): Insert
+    {
+        $this->values = $this->set($values);
+        return $this;
     }
 
     /**
@@ -36,13 +44,11 @@ class Update extends Insert
     {
         $this->addPlaceholders($this->placeholders()->get());
         return 'UPDATE ' . $this->table() . ' SET '
-            . (count($this->values)
-                ? implode(',', $this->values)
-                : (count($this->fields) & !count($this->values)
-                    ? implode(',', array_map(function ($field) {
-                        return $this->escapeField($field) . ' = ?';
-                    ;}, $this->fields))
-                    : '')
+            . (!is_null($this->values)
+                ? $this->values
+                : $this->concat(array_map(function ($field) {
+                    return $this->escapeField($field) . ' = ?';;
+                }, $this->fields))
             )
             . $this->getParts();
     }
