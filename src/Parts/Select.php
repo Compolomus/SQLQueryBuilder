@@ -25,23 +25,19 @@ class Select
 
     public function __construct(array $fields = ['*'])
     {
-        $this->setFields($fields);
+        array_map([$this, 'setField'], array_keys($fields), array_values($fields));
     }
 
-    private function setFields(array $fields): void
+    private function setField($allias, $value): void
     {
-        foreach ($fields as $allias => $column) {
-            preg_match("#(?<fieldName>.*)\|(?<function>.*)#", $column, $matches);
-            if (count($matches)) {
-                $field = $matches['fieldName'];
-                $object = $this->fields[$field] = new Fields($field);
-                $object->setFunction($matches['function']);
-            } else {
-                $object = $this->fields[$column] = new Fields($column);
-            }
-            if (!is_int($allias)) {
-                $object->setAllias($allias);
-            }
+        preg_match("#(?<fieldName>\w{2,}|\*)(\|(?<function>\w{2,}))?#is", $value, $matches);
+        $field = $matches['fieldName'];
+        $object = $this->fields[$field] = new Fields($field);
+        if (isset($matches['function'])) {
+            $object->setFunction($matches['function']);
+        }
+        if (!is_int($allias)) {
+            $object->setAllias($allias);
         }
     }
 
