@@ -4,6 +4,7 @@ namespace Compolomus\LSQLQueryBuilder\Tests;
 
 use Compolomus\LSQLQueryBuilder\Builder;
 use Compolomus\LSQLQueryBuilder\BuilderFactory;
+use Compolomus\LSQLQueryBuilder\System\Fields;
 use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase
@@ -47,6 +48,29 @@ class BuilderTest extends TestCase
         $this->assertInstanceOf(Builder::class, $builder);
         $this->assertEquals('`Dummy`', $builder->table());
     }
+
+    public function testFields(): void
+    {
+        $field = new Fields('Dummy');
+        $this->assertEquals('`Dummy`', $field->result());
+        $field->setAllias('Allias');
+        $this->assertEquals('`Dummy` AS `Allias`', $field->result());
+        $field->setFunction('count');
+        $this->assertEquals('COUNT(`Dummy`) AS `Allias`', $field->result());
+    }
+
+    public function testSelect(): void
+    {
+        $builder = (new Builder('Dummy'))->select();
+        $this->assertEquals('SELECT * FROM `Dummy`', $builder);
+        $builder = new Builder('table');
+        $this->assertEquals('SELECT COUNT(`Dummy`) AS `Allias`,`dummy` FROM `table`', $builder->select(['Allias' => 'Dummy|count', 'dummy']));
+    }
+
+//    public function testException(): void
+//    {
+//
+//    }
 
     //    public function testConcat()
 //    {
@@ -114,10 +138,7 @@ class BuilderTest extends TestCase
 //
 //    }
 //
-//    public function testSelect()
-//    {
-//
-//    }
+
 //
 //    public function test__get()
 //    {
