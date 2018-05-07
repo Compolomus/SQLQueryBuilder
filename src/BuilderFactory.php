@@ -4,8 +4,8 @@ namespace Compolomus\LSQLQueryBuilder;
 
 class BuilderFactory
 {
-    public function __invoke()
+    public function __invoke(?string $table = null)
     {
-        return new Builder;
+        return new Builder($table);
     }
 }

@@ -41,7 +41,7 @@ class Builder
 
     public function table(): string
     {
-        return $this->escapeField($this->table);
+        return $this->table ? $this->escapeField($this->table) : '';
     }
 
     public function placeholders(): array
