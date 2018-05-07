@@ -66,7 +66,8 @@ class BuilderTest extends TestCase
         $this->assertEquals('SELECT * FROM `Dummy`', $builder);
         $builder = new Builder('table');
         $this->assertEquals('SELECT COUNT(`Dummy`) AS `Allias`,`dummy` AS `allias` FROM `table`',
-            $builder->select(['Dummy', 'allias' => 'dummy'])->setFunction('Dummy', 'count')->setAllias('Dummy', 'Allias'));
+            $builder->select(['Dummy', 'allias' => 'dummy'])->setFunction('Dummy', 'count')->setAllias('Dummy',
+                'Allias'));
     }
 
     public function testFieldsException(): void
@@ -81,10 +82,50 @@ class BuilderTest extends TestCase
         (new Builder('table'))->select(['dummy'])->setFunction('notDummy', 'count');
     }
 
-    //    public function testConcat()
-//    {
-//
-//    }
+    public function testCallerException(): void
+    {
+        $this->expectException(BuilderException::class);
+        (new Builder('table'))->select(['dummy'])->setFun('notDummy', 'count');
+    }
+
+    public function testHelperConcat(): void
+    {
+        $testArray = [1, 2, 3];
+        $builder = new Builder('dummy');
+        $this->assertEquals('1,2,3', $builder->concat($testArray));
+    }
+
+    public function testHelperWhere(): void
+    {
+        $testArray = ['one', 'two', 'three'];
+        $builder = new Builder('dummy');
+        $this->assertEquals('one AND two AND three', $builder->concatWhere($testArray));
+        $this->assertEquals('one OR two OR three', $builder->concatWhere($testArray, 'or'));
+        $this->expectException(BuilderException::class);
+        $this->assertEquals('one OR two OR three', $builder->concatWhere($testArray, 'dummy'));
+    }
+
+    public function testHelperOrder(): void
+    {
+        $testArray = ['one', 'two', 'three'];
+        $builder = new Builder('dummy');
+        $this->assertEquals('`one`,`two`,`three` ASC', $builder->concatOrder($testArray));
+        $this->assertEquals('`one`,`two`,`three` DESC', $builder->concatOrder($testArray, 'desc'));
+        $this->expectException(BuilderException::class);
+        $this->assertEquals('`one`,`two`,`three` DESC', $builder->concatOrder($testArray, 'dummy'));
+    }
+
+    public function testHelperMap(): void
+    {
+        $testArray = ['one', 'two', 'three'];
+        $builder = new Builder('dummy');
+        $this->assertEquals('dummy = one,two,three', $builder->map('dummy', $builder->concat($testArray)));
+    }
+
+    public function testHelperUid(): void
+    {
+        $this->assertNotFalse(preg_match('/^[a-f0-9]{10}DUMMY$/i', (new Builder('dummy'))->uid('dummy')));
+    }
 //
 //    public function testInsert()
 //    {
