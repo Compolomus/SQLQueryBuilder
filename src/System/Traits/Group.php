@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
@@ -11,7 +11,7 @@ trait Group
     public function group(array $fields): PGroup
     {
         $this->group = new Pgroup($fields);
-        $this->group->base($this);
+        $this->group->setBase($this);
         return $this->group;
     }
 }

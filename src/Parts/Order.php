@@ -1,7 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
+use Compolomus\LSQLQueryBuilder\BuilderException;
 use Compolomus\LSQLQueryBuilder\System\Traits\{
     Helper,
     Caller
@@ -17,17 +18,17 @@ class Order
 
     public function __construct(array $fields = [], string $type = 'asc')
     {
-        if (!in_array(strtolower($type), ['asc', 'desc'])) {
-            throw new \InvalidArgumentException('Передан неверный тип ' . $type . ' |ORDER add|');
+        if (!\in_array(strtolower($type), ['asc', 'desc'], true)) {
+            throw new BuilderException('Передан неверный тип ' . $type . ' |ORDER add|');
         }
-        if (count($fields)) {
+        if (\count($fields)) {
             $this->map($fields, $type);
         }
     }
 
     private function map(array $fields, string $type = 'asc'): void
     {
-        array_map([$this, 'add'], $fields, array_fill(0, count($fields), $type));
+        array_map([$this, 'add'], $fields, array_fill(0, \count($fields), $type));
     }
 
 

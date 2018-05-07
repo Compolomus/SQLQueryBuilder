@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System;
+
+use Compolomus\LSQLQueryBuilder\BuilderException;
 
 class Conditions
 {
@@ -26,7 +28,9 @@ class Conditions
 
     private $conditions = [];
 
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
     public function conditions(): array
     {
@@ -35,8 +39,8 @@ class Conditions
 
     public function add(string $field, string $condition, $value): void
     {
-        if (!in_array(strtolower($condition), $this->conditionTypes)) {
-            throw new \InvalidArgumentException('Передан неверный тип ' . $condition . ' |CONDITIONS add|');
+        if (!\in_array(strtolower($condition), $this->conditionTypes, true)) {
+            throw new BuilderException('Передан неверный тип ' . $condition . ' |CONDITIONS add|');
         }
         $key = $this->uid('w');
         $value = $this->type($condition, $value);
@@ -44,12 +48,11 @@ class Conditions
         $this->conditions[] = $this->escapeField($field) . ' ' . strtoupper($condition) . ' :' . $key;
     }
 
-    public function type(string $condition, $value)
+    public function type(string $condition, $value): string
     {
-        return in_array($condition, ['in', 'not in'])
+        return \in_array($condition, ['in', 'not in'], true)
             ? '(' . $this->concat($value) . ')'
-            : (
-            in_array($condition, ['between', 'not between'])
+            : (\in_array($condition, ['between', 'not between'], true)
                 ? implode(' AND ', $value)
                 : $value
             );

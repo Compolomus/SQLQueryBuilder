@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder;
 
@@ -53,7 +53,7 @@ class Builder
 
     public function addPlaceholders($placeholders): void
     {
-        $this->placeholders = $this->placeholders + $placeholders;
+        $this->placeholders += $placeholders;
     }
 
     public function __set(string $name, $value): void
@@ -81,7 +81,7 @@ class Builder
         $class = "Compolomus\\LSQLQueryBuilder\\Parts\\" . ucfirst($name);
         if (class_exists($class)) {
             $this->$name = new $class(...$args);
-            $this->$name->base($this);
+            $this->$name->setBase($this);
             return $this->$name;
         }
     }

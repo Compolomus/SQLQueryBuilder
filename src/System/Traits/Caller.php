@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
@@ -10,7 +10,7 @@ trait Caller
 {
     private $base;
 
-    public function base($base): void
+    public function setBase($base): void
     {
         $this->base = $base;
     }

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -20,7 +20,11 @@ class Update extends Insert
 {
     use Caller, TLimit, TWhere, TOrder, GetParts, Placeholders, Helper;
 
-    protected $values = null;
+    public function __construct(array $args = [])
+    {
+        parent::__construct($args);
+        $this->values = null;
+    }
 
     public function set(array $values): string
     {
@@ -44,10 +48,9 @@ class Update extends Insert
     {
         $this->addPlaceholders($this->placeholders()->get());
         return 'UPDATE ' . $this->table() . ' SET '
-            . (!is_null($this->values)
-                ? $this->values
-                : $this->concat(array_map(function ($field) {
-                    return $this->escapeField($field) . ' = ?';;
+            . ($this->values ??
+                $this->concat(array_map(function ($field) {
+                    return $this->escapeField($field) . ' = ?';
                 }, $this->fields))
             )
             . $this->getParts();

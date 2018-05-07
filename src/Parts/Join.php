@@ -1,7 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
+use Compolomus\LSQLQueryBuilder\BuilderException;
 use Compolomus\LSQLQueryBuilder\System\{
     Traits\Helper,
     Traits\Caller
@@ -15,11 +16,11 @@ class Join
 
     private $onPairs;
 
-    private $using = null;
+    private $using;
 
-    private $alias = null;
+    private $alias;
 
-    private $joinType = null;
+    private $joinType;
 
     private $joinTypes = ['left', 'right', 'cross', 'inner'];
 
@@ -42,8 +43,8 @@ class Join
 
     public function setType(string $joinType): Join
     {
-        if (!in_array($joinType, $this->joinTypes)) {
-            throw new \InvalidArgumentException('DIE |JOIN construct|');
+        if (!\in_array($joinType, $this->joinTypes, true)) {
+            throw new BuilderException('DIE |JOIN construct|');
         }
         $this->joinType[$this->counter] = $joinType;
         return $this;
@@ -51,7 +52,7 @@ class Join
 
     public function setAlias(?string $alias): Join
     {
-        if (!is_null($alias)) {
+        if (null !== $alias) {
             $this->alias[$this->counter] = $alias;
         }
         return $this;
@@ -59,7 +60,9 @@ class Join
 
     public function getTable(int $counter): string
     {
-        return (!is_null($this->alias[$counter])) ? $this->escapeField($this->alias[$counter]) : $this->escapeField($this->table[$counter]);
+        return null !== $this->alias[$counter]
+            ? $this->escapeField($this->alias[$counter])
+            : $this->escapeField($this->table[$counter]);
     }
 
     public function using(string $field): Join
@@ -70,7 +73,7 @@ class Join
 
     public function addOn(array $onPairs): Join
     {
-        if (count($onPairs)) {
+        if (\count($onPairs)) {
             $this->onPairs[$this->counter] = $onPairs;
         }
         return $this;
@@ -97,7 +100,7 @@ class Join
         foreach ($this->table as $counter => $join) {
             $result[] = ' ' . strtoupper($this->joinType[$counter]) . ' JOIN '
                 . $this->escapeField($join)
-                . (!is_null($this->alias[$counter]) ? ' AS ' . $this->escapeField($this->alias[$counter]) : '');
+                . (null !== $this->alias[$counter] ? ' AS ' . $this->escapeField($this->alias[$counter]) : '');
         }
         $result[] = $this->onMap();
         return implode(' ', $result);

@@ -1,7 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
+use Compolomus\LSQLQueryBuilder\BuilderException;
 use Compolomus\LSQLQueryBuilder\System\{
     Traits\Helper,
     Traits\GetParts,
@@ -30,21 +31,21 @@ class Select
 
     private function setField($allias, $value): void
     {
-        preg_match("#(?<fieldName>\w{2,}|\*)(\|(?<function>\w{2,}))?#is", $value, $matches);
+        preg_match("#(?<fieldName>\w{2,}|\*)(\|(?<function>\w{2,}))?#i", $value, $matches);
         $field = $matches['fieldName'];
         $object = $this->fields[$field] = new Fields($field);
         if (isset($matches['function'])) {
             $object->setFunction($matches['function']);
         }
-        if (!is_int($allias)) {
+        if (!\is_int($allias)) {
             $object->setAllias($allias);
         }
     }
 
     public function setFunction(string $fieldName, string $function): Select
     {
-        if (!in_array($fieldName, array_keys($this->fields))) {
-            throw new \InvalidArgumentException('Не найдено поле ' . $fieldName . ' |SELECT setFunction|');
+        if (!array_key_exists($fieldName, $this->fields)) {
+            throw new BuilderException('Не найдено поле ' . $fieldName . ' |SELECT setFunction|');
         }
         $this->fields[$fieldName]->setFunction($function);
         return $this;
@@ -67,7 +68,7 @@ class Select
     {
         return 'SELECT ' . $this->getFields() . ' FROM '
             . $this->table()
-            . (!is_null($this->join) ? $this->join->result() : '')
+            . (null !== $this->join ? $this->join->result() : '')
             . $this->getParts();
     }
 }

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
@@ -11,7 +11,7 @@ trait Order
     public function order(array $fields = [], string $type = 'asc'): Porder
     {
         $this->order = new Porder($fields, $type);
-        $this->order->base($this);
+        $this->order->setBase($this);
         return $this->order;
     }
 }

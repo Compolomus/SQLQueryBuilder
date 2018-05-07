@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -22,8 +22,8 @@ class Insert
 
     public function __construct(array $args = [])
     {
-        if (count($args) > 0) {
-            if (is_string(key($args))) {
+        if (\count($args) > 0) {
+            if (\is_string(key($args))) {
                 $this->fields(array_keys($args));
             }
             $this->values(array_values($args));
@@ -64,9 +64,9 @@ class Insert
         return 'INSERT INTO ' . $this->table() . ' '
             . '(' . $this->concat($this->escapeField($this->fields)) . ')'
             . ' VALUES '
-            . (count($this->values)
+            . (\count($this->values)
                 ? $this->concat($this->values)
-                : '(' . $this->concat(array_fill(0, count($this->fields), '?')) . ')'
+                : '(' . $this->concat(array_fill(0, \count($this->fields), '?')) . ')'
             );
     }
 }

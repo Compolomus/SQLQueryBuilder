@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
@@ -8,7 +8,7 @@ trait GetParts
     {
         $result = '';
         foreach ($fields as $value) {
-            $result .= (property_exists($this, $value) && is_object($this->$value) ? ' ' . $this->$value->result() : '');
+            $result .= (property_exists($this, $value) && \is_object($this->$value) ? ' ' . $this->$value->result() : '');
         }
         return $result;
     }

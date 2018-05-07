@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
@@ -27,7 +27,7 @@ class Group
     public function result(): string
     {
         $group = '';
-        if (count($this->groups)) {
+        if (\count($this->groups)) {
             $group = 'GROUP BY ' . $this->concat($this->groups);
         }
         return $group;

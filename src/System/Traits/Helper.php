@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
+use Compolomus\LSQLQueryBuilder\BuilderException;
+
 trait Helper
 {
-    public function concatWhere(array $conditions, string $separator = 'and')
+    public function concatWhere(array $conditions, string $separator = 'and'): string
     {
-        if (!in_array($separator, ['and', 'or'])) {
-            throw new \InvalidArgumentException('Передан неверный тип |WHERE concate|');
+        if (!\in_array($separator, ['and', 'or'], true)) {
+            throw new BuilderException('Передан неверный тип |WHERE concate|');
         }
         return implode(' ' . strtoupper($separator) . ' ', $conditions);
     }
@@ -17,13 +19,13 @@ trait Helper
         return implode(',', $fields);
     }
 
-    public function concatOrder(array $order, string $type = 'asc')
+    public function concatOrder(array $order, string $type = 'asc'): string
     {
-        if (!in_array($type, ['asc', 'desc'])) {
-            throw new \InvalidArgumentException('Передан неверный тип |ORDER concate|');
+        if (!\in_array($type, ['asc', 'desc'], true)) {
+            throw new BuilderException('Передан неверный тип |ORDER concate|');
         }
         $result = '';
-        if (count($order) > 0) {
+        if (\count($order) > 0) {
             $result = implode(',', $this->escapeField($order)) . ' ' . strtoupper($type);
         }
         return $result;
@@ -35,7 +37,8 @@ trait Helper
      */
     public function escapeField($field)
     {
-        return is_array($field) ? array_map([$this, 'escapeField'], $field) : str_replace('`*`', '*', '`' . str_replace('.', '`.`', $field) . '`');
+        return \is_array($field) ? array_map([$this, 'escapeField'], $field) : str_replace('`*`', '*',
+            '`' . str_replace('.', '`.`', $field) . '`');
     }
 
     public function map(string $field, $value): string

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
@@ -11,7 +11,7 @@ trait Join
     public function join(string $table, ?string $alias = null, array $onPairs = [], string $joinType = 'left'): Pjoin
     {
         $this->join = new Pjoin($table, $alias, $onPairs, $joinType);
-        $this->join->base($this);
+        $this->join->setBase($this);
         return $this->join;
     }
 }

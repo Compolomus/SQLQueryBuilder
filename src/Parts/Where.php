@@ -1,7 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\Parts;
 
+use Compolomus\LSQLQueryBuilder\BuilderException;
 use Compolomus\LSQLQueryBuilder\System\{
     Conditions,
     Traits\Helper,
@@ -25,14 +26,13 @@ class Where
 
     public function where(array $where = [], string $type = 'and'): Where
     {
-        if (!in_array(strtolower($type), $this->whereTypes)) {
-            throw new \InvalidArgumentException('Передан неверный тип ' . $type . '  |WHERE construct|');
+        if (!\in_array(strtolower($type), $this->whereTypes, true)) {
+            throw new BuilderException('Передан неверный тип ' . $type . '  |WHERE construct|');
         }
         $this->whereType[$this->counter] = $type;
         $this->conditions[$this->counter] = new Conditions;
-        if (count($where)) {
-            foreach ($where as $condition) {
-                list($field, $cond, $value) = $condition;
+        if (\count($where)) {
+            foreach ($where as [$field, $cond, $value]) {
                 $this->add($field, $cond, $value);
             }
         }

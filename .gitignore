@@ -1,3 +1,5 @@
-vendor/
-index.php
-composer.lock
+/.idea/
+/vendor/
+/index.php
+/composer.lock
+/clover.xml

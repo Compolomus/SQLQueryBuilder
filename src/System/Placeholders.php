@@ -1,10 +1,10 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace Compolomus\LSQLQueryBuilder\System;
 
 class Placeholders
 {
-    private $placeholders = [];
+    private $placeholders;
 
     public function __construct(array $placeholders = []) // reset
     {
