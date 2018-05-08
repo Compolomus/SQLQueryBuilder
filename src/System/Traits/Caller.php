@@ -19,10 +19,9 @@ trait Caller
 
     public function __call(string $method, $args)
     {
-        if (!method_exists(__CLASS__, $method) && method_exists($this->base, $method)) {
+        if (!method_exists(__CLASS__, $method)) {
             return $this->base->$method(...$args);
         }
-        throw new BuilderException('Undefined method' . $method . ' |Caller call|');
     }
 
     public function __toString()

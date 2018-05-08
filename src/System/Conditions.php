@@ -50,11 +50,12 @@ class Conditions
 
     public function type(string $condition, $value): string
     {
-        return \in_array($condition, ['in', 'not in'], true)
-            ? '(' . $this->concat($value) . ')'
-            : (\in_array($condition, ['between', 'not between'], true)
-                ? implode(' AND ', $value)
-                : $value
-            );
+        return (!\in_array($condition, ['in', 'not in'], true)
+            ? (!\in_array($condition, ['between', 'not between'], true)
+                ? $value
+                : implode(' AND ', $value)
+            )
+            : '(' . $this->concat($value) . ')'
+        );
     }
 }

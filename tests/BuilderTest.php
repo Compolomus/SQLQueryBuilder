@@ -5,7 +5,10 @@ namespace Compolomus\LSQLQueryBuilder\Tests;
 use Compolomus\LSQLQueryBuilder\Builder;
 use Compolomus\LSQLQueryBuilder\BuilderException;
 use Compolomus\LSQLQueryBuilder\BuilderFactory;
+use Compolomus\LSQLQueryBuilder\Parts\Where;
+use Compolomus\LSQLQueryBuilder\System\Conditions;
 use Compolomus\LSQLQueryBuilder\System\Fields;
+use Compolomus\LSQLQueryBuilder\System\Placeholders;
 use PHPUnit\Framework\TestCase;
 
 class BuilderTest extends TestCase
@@ -82,12 +85,6 @@ class BuilderTest extends TestCase
         (new Builder('table'))->select(['dummy'])->setFunction('notDummy', 'count');
     }
 
-    public function testCallerException(): void
-    {
-        $this->expectException(BuilderException::class);
-        (new Builder('table'))->select(['dummy'])->setFun('notDummy', 'count');
-    }
-
     public function testHelperConcat(): void
     {
         $testArray = [1, 2, 3];
@@ -125,6 +122,54 @@ class BuilderTest extends TestCase
     public function testHelperUid(): void
     {
         $this->assertNotFalse(preg_match('/^[a-f0-9]{10}DUMMY$/i', (new Builder('dummy'))->uid('dummy')));
+    }
+
+    public function testPlaceholders(): void
+    {
+        $placeholders = new Placeholders();
+        $this->assertEquals($placeholders->get(), []);
+        $placeholders->set('dummy', 'dummy');
+        $placeholders->set('dummy1', 'dummy1');
+        $this->assertEquals($placeholders->get(), [':dummy' => 'dummy', ':dummy1' => 'dummy1']);
+    }
+
+    public function testConditions(): void
+    {
+        $conditions = new Conditions();
+        $this->assertEquals($conditions->conditions(), []);
+        $conditions->add('dummy1', '<', 123);
+        $conditions->add('dummy2', 'between', [1, 2]);
+        $conditions->add('dummy3', 'not in', [3, 4, 5]);
+        $conditions->add('dummy4', '>', 456);
+        $this->assertCount(4, $conditions->conditions());
+    }
+
+    public function testConditionsException(): void
+    {
+        $conditions = new Conditions();
+        $this->expectException(BuilderException::class);
+        $conditions->add('dummy', 'qwerty', 1);
+    }
+
+    public function testWhere(): void
+    {
+        $select = (new Builder('dummy'))
+            ->select()
+            ->where([['id', '=', 15], ['firm_id', 'not in', [1, 2, 3]]])
+                ->add('dummy', '<', 123)
+            ->where([['age', '>', 17], ['friends', '>=', 177]], 'or');
+        $this->assertNotFalse(
+            preg_match('/^SELECT * FROM `dummy` WHERE (`id` = \:[a-f0-9]{10}W AND `firm_id` NOT IN \:[a-f0-9]{10}W AND `dummy` <= \:[a-f0-9]{10}W) AND (`age` > \:[a-f0-9]{10}W OR `friends` >= \:[a-f0-9]{10}W)$/i',
+                $select->result()
+            )
+        );
+        $this->assertCount(5, $select->placeholders());
+    }
+
+    public function testWhereException(): void
+    {
+        $this->expectException(BuilderException::class);
+        new Where([], 'dummy');
     }
 //
 //    public function testInsert()
