@@ -5,6 +5,7 @@ namespace Compolomus\LSQLQueryBuilder\Tests;
 use Compolomus\LSQLQueryBuilder\Builder;
 use Compolomus\LSQLQueryBuilder\BuilderException;
 use Compolomus\LSQLQueryBuilder\BuilderFactory;
+use Compolomus\LSQLQueryBuilder\Parts\Group;
 use Compolomus\LSQLQueryBuilder\Parts\Where;
 use Compolomus\LSQLQueryBuilder\System\Conditions;
 use Compolomus\LSQLQueryBuilder\System\Fields;
@@ -121,7 +122,9 @@ class BuilderTest extends TestCase
 
     public function testHelperUid(): void
     {
-        $this->assertNotFalse(preg_match('/^[a-f0-9]{10}DUMMY$/i', (new Builder('dummy'))->uid('dummy')));
+        $uid = (new Builder('dummy'))->uid('w');
+        preg_match('/^([a-f0-9]{10}w|i|u{1})$/i', $uid, $matches);
+        $this->assertCount(2, $matches);
     }
 
     public function testPlaceholders(): void
@@ -155,15 +158,20 @@ class BuilderTest extends TestCase
     {
         $select = (new Builder('dummy'))
             ->select()
-            ->where([['id', '=', 15], ['firm_id', 'not in', [1, 2, 3]]])
-                ->add('dummy', '<', 123)
-            ->where([['age', '>', 17], ['friends', '>=', 177]], 'or');
-        $this->assertNotFalse(
-            preg_match('/^SELECT * FROM `dummy` WHERE (`id` = \:[a-f0-9]{10}W AND `firm_id` NOT IN \:[a-f0-9]{10}W AND `dummy` <= \:[a-f0-9]{10}W) AND (`age` > \:[a-f0-9]{10}W OR `friends` >= \:[a-f0-9]{10}W)$/i',
-                $select->result()
-            )
-        );
+                ->where([['id', '=', 15], ['firm_id', 'not in', [1, 2, 3]]])
+                    ->add('dummy', '<', 123)
+                ->where([['age', '>', 17], ['friends', '>=', 177]], 'or');
+        $pattern = "/^(SELECT \* FROM `dummy` WHERE \(`id` \= \:[a-f0-9]{10}W AND `firm_id` NOT IN \:[a-f0-9]{10}W AND `dummy` \< \:[a-f0-9]{10}W\) AND \(`age` \> \:[a-f0-9]{10}W OR `friends` \>\= \:[a-f0-9]{10}W\))$/i";
+        preg_match($pattern, $select, $matches);
+        $this->assertCount(2, $matches);
         $this->assertCount(5, $select->placeholders());
+    }
+
+    public function testBuilderToString(): void
+    {
+        $builder = new Builder('dummy');
+        $builder->select();
+        $this->assertEquals($builder, 'SELECT * FROM `dummy`');
     }
 
     public function testWhereException(): void
@@ -171,81 +179,21 @@ class BuilderTest extends TestCase
         $this->expectException(BuilderException::class);
         new Where([], 'dummy');
     }
-//
-//    public function testInsert()
-//    {
-//
-//    }
-//
-//    public function test__isset()
-//    {
-//
-//    }
-//
 
-//
-//    public function test__call()
-//    {
-//
-//    }
-//
-//    public function testMap()
-//    {
-//
-//    }
-//
-//    public function test__unset()
-//    {
-//
-//    }
-//
-//    public function test__set()
-//    {
-//
-//    }
-//
-//    public function testDelete()
-//    {
-//
-//    }
-//
-//    public function testPlaceholders()
-//    {
-//
-//    }
-//
-//    public function testConcatOrder()
-//    {
-//
-//    }
-//
+    public function testGroup(): void
+    {
+        $group = new Group(['dummy', 'dummy2']);
+        $group->add('dummy3');
+        $this->assertEquals('GROUP BY `dummy`,`dummy2`,`dummy3`', $group->result());
+    }
 
+    public function testBuilderCallException(): void
+    {
+        $this->expectException(BuilderException::class);
+        (new Builder('dummy'))->dummy();
+    }
 //
-//    public function testAddPlaceholders()
-//    {
-//
-//    }
-//
-
-//
-//    public function testUpdate()
-//    {
-//
-//    }
-//
-
-//
-//    public function test__get()
-//    {
-//
-//    }
-//
-//    public function testConcatWhere()
-//    {
-//
-//    }
-//
-//    public function testUid()
+//    public function testOrder(): void
 //    {
 //
 //    }

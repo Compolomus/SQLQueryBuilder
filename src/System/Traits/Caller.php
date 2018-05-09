@@ -2,8 +2,6 @@
 
 namespace Compolomus\LSQLQueryBuilder\System\Traits;
 
-use Compolomus\LSQLQueryBuilder\BuilderException;
-
 /**
  * @method string table()
  * @method void addPlaceholders($placeholders)
@@ -17,6 +15,13 @@ trait Caller
         $this->base = $base;
     }
 
+    /**
+     * Recursive call
+     *
+     * @param string $method
+     * @param mixed $args
+     * @return mixed
+     */
     public function __call(string $method, $args)
     {
         if (!method_exists(__CLASS__, $method)) {

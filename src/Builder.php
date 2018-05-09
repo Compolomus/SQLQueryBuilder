@@ -66,15 +66,15 @@ class Builder
         return $this->data[$name] ?? null;
     }
 
-    public function __isset(string $name): bool
-    {
-        return isset($this->data[$name]);
-    }
-
-    public function __unset(string $name): void
-    {
-        unset($this->data[$name]);
-    }
+//    public function __isset(string $name): bool
+//    {
+//        return isset($this->data[$name]);
+//    }
+//
+//    public function __unset(string $name): void
+//    {
+//        unset($this->data[$name]);
+//    }
 
     public function __call(string $name, $args)
     {
@@ -84,5 +84,11 @@ class Builder
             $this->$name->setBase($this);
             return $this->$name;
         }
+        throw new BuilderException('Undefined class ' . $class . ' |Builder call|');
+    }
+
+    public function __toString(): string
+    {
+        return current($this->data)->__toString();
     }
 }
